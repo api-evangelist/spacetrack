@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Space-Track API Vocabulary",
+  "description": "Controlled vocabulary of terms, acronyms, and field definitions used across the Space-Track API and space surveillance domain.",
+  "version": "1.0.0",
+  "source": "https://www.space-track.org/documentation",
+  "terms": [
+    {
+      "term": "TLE",
+      "label": "Two-Line Element Set",
+      "definition": "A standardized fixed-width data format (AFSPC format) representing the orbital parameters of an Earth-orbiting object at a specific epoch. Consists of two 69-character lines (plus optional name line for 3LE). Supports NORAD catalog numbers up to 99999; Alpha-5 notation extends this to 339999.",
+      "relatedTerms": ["3LE", "OMM", "SGP4", "epoch"]
+    },
+    {
+      "term": "3LE",
+      "label": "Three-Line Element Set",
+      "definition": "A TLE format variant that prepends a line 0 containing the object name before the two standard TLE lines.",
+      "relatedTerms": ["TLE"]
+    },
+    {
+      "term": "OMM",
+      "label": "Orbit Mean-Elements Message",
+      "definition": "A CCSDS (Consultative Committee for Space Data Systems) standard data format for exchanging satellite orbital element sets. Supersedes the legacy TLE format and supports objects with catalog numbers above 99999.",
+      "relatedTerms": ["TLE", "CCSDS", "KVN", "XML"]
+    },
+    {
+      "term": "SGP4",
+      "label": "Simplified General Perturbations 4",
+      "definition": "The orbital propagation model used by the US Space Surveillance Network to generate and propagate TLE/OMM element sets. Accounts for atmospheric drag, Earth oblateness, and solar/lunar perturbations.",
+      "relatedTerms": ["TLE", "OMM", "BSTAR"]
+    },
+    {
+      "term": "NORAD_CAT_ID",
+      "label": "NORAD Catalog Number",
+      "definition": "A unique integer assigned by NORAD (North American Aerospace Defense Command) to each tracked Earth-orbiting object. Ranges from 1 to 339999. Objects 100000-339999 use Alpha-5 alphanumeric notation in TLE format.",
+      "relatedTerms": ["INTLDES", "Alpha-5"]
+    },
+    {
+      "term": "INTLDES",
+      "label": "International Designator",
+      "definition": "A standardized identifier for spacecraft assigned at launch in the format YYYY-NNNPPP, where YYYY is the launch year, NNN is the sequential launch number for that year (zero-padded to 3 digits), and PPP is the piece identifier (A for primary payload, B, C, etc. for additional pieces).",
+      "examples": ["1998-067A", "2020-001B"],
+      "relatedTerms": ["NORAD_CAT_ID", "COSPAR ID"]
+    },
+    {
+      "term": "CDM",
+      "label": "Conjunction Data Message",
+      "definition": "A standardized message (CCSDS 508.0-B-1) issued by the 18th Space Control Squadron notifying satellite operators of predicted close approaches between tracked objects. Contains time of closest approach, miss distance, probability of collision, and covariance data.",
+      "relatedTerms": ["TCA", "PC", "MIN_RNG", "conjunction"]
+    },
+    {
+      "term": "TCA",
+      "label": "Time of Closest Approach",
+      "definition": "The predicted date and time when two tracked objects will reach their minimum separation distance during a conjunction event.",
+      "relatedTerms": ["CDM", "MIN_RNG", "PC"]
+    },
+    {
+      "term": "PC",
+      "label": "Probability of Collision",
+      "definition": "The statistical probability (0.0 to 1.0) that two tracked objects will collide during a predicted conjunction event. Calculated using covariance matrices and relative position/velocity at TCA.",
+      "relatedTerms": ["CDM", "TCA", "conjunction"]
+    },
+    {
+      "term": "MIN_RNG",
+      "label": "Minimum Range",
+      "definition": "The predicted minimum separation distance in meters between two objects at their Time of Closest Approach (TCA) during a conjunction event.",
+      "relatedTerms": ["TCA", "PC", "CDM"]
+    },
+    {
+      "term": "TIP",
+      "label": "Tracking and Impact Prediction",
+      "definition": "A message format issued by the 18th Space Control Squadron predicting the reentry time and geographic impact area for tracked objects undergoing orbital decay. Updated on an accelerating schedule as reentry approaches.",
+      "relatedTerms": ["decay", "reentry", "DECAY_EPOCH"]
+    },
+    {
+      "term": "SATCAT",
+      "label": "Satellite Catalog",
+      "definition": "The comprehensive catalog maintained by the US Space Surveillance Network listing all tracked Earth-orbiting objects — payloads, rocket bodies, and debris — along with their metadata (launch date, country, orbital parameters, etc.).",
+      "relatedTerms": ["NORAD_CAT_ID", "INTLDES", "OBJECT_TYPE"]
+    },
+    {
+      "term": "GP",
+      "label": "General Perturbations",
+      "definition": "The Space-Track API data class providing the current/most-recent SGP4 keplerian element set for each tracked object. Supersedes legacy TLE, TLE_LATEST, and OMM classes.",
+      "relatedTerms": ["TLE", "OMM", "SGP4", "GP_HISTORY"]
+    },
+    {
+      "term": "GP_HISTORY",
+      "label": "General Perturbations History",
+      "definition": "The Space-Track API data class providing the complete historical archive of GP element sets. Contains 138+ million records. Intended for one-time bulk download and local storage.",
+      "relatedTerms": ["GP", "epoch"]
+    },
+    {
+      "term": "BSTAR",
+      "label": "B* (BSTAR) Drag Coefficient",
+      "definition": "An SGP4-specific drag coefficient in units of Earth radii^-1 that encodes the combined effects of atmospheric drag and radiation pressure on an object's orbit. Encoded in TLE line 1.",
+      "relatedTerms": ["SGP4", "TLE", "mean motion dot"]
+    },
+    {
+      "term": "MEAN_MOTION",
+      "label": "Mean Motion",
+      "definition": "The average angular velocity of a satellite in its orbit, expressed in revolutions per day. For a circular orbit this equals 86400 / orbital_period_seconds.",
+      "relatedTerms": ["orbital period", "SGP4"]
+    },
+    {
+      "term": "ECCENTRICITY",
+      "label": "Orbital Eccentricity",
+      "definition": "A dimensionless number from 0 (circular orbit) to just below 1 (highly elliptical orbit) that describes the shape of an orbit. Stored without leading decimal in TLE format.",
+      "relatedTerms": ["apogee", "perigee", "semimajor axis"]
+    },
+    {
+      "term": "INCLINATION",
+      "label": "Orbital Inclination",
+      "definition": "The angle in degrees between the orbital plane and the Earth's equatorial plane. Ranges from 0° (equatorial prograde) to 90° (polar) to 180° (equatorial retrograde). Approximately 97-98° indicates a sun-synchronous orbit.",
+      "relatedTerms": ["RA_OF_ASC_NODE"]
+    },
+    {
+      "term": "RA_OF_ASC_NODE",
+      "label": "Right Ascension of Ascending Node (RAAN)",
+      "definition": "The angle in degrees measured eastward from the vernal equinox to the ascending node (where the satellite crosses the equatorial plane from south to north). Ranges 0° to 360°.",
+      "relatedTerms": ["INCLINATION", "ascending node"]
+    },
+    {
+      "term": "ARG_OF_PERICENTER",
+      "label": "Argument of Pericenter",
+      "definition": "The angle in degrees measured in the orbital plane from the ascending node to the point of closest approach (perigee for Earth orbits). Ranges 0° to 360°.",
+      "relatedTerms": ["PERIGEE", "RA_OF_ASC_NODE"]
+    },
+    {
+      "term": "MEAN_ANOMALY",
+      "label": "Mean Anomaly",
+      "definition": "The fraction of the orbital period elapsed since last passing perigee, expressed as an angle in degrees from 0° to 360°. Combined with mean motion to determine satellite position at any time.",
+      "relatedTerms": ["epoch", "MEAN_MOTION", "ARG_OF_PERICENTER"]
+    },
+    {
+      "term": "EPOCH",
+      "label": "Element Set Epoch",
+      "definition": "The reference date and time (UTC) for which the orbital elements are valid. Propagating elements far from their epoch introduces increasing error.",
+      "relatedTerms": ["GP", "TLE", "CREATION_DATE"]
+    },
+    {
+      "term": "RCS",
+      "label": "Radar Cross-Section",
+      "definition": "A measure in square meters of an object's radar reflectivity, used to estimate object size and detectability. Categorized as SMALL (<0.1 m^2), MEDIUM (0.1-1.0 m^2), or LARGE (>1.0 m^2).",
+      "relatedTerms": ["RCS_SIZE", "OBJECT_TYPE"]
+    },
+    {
+      "term": "Alpha-5",
+      "label": "Alpha-5 Notation",
+      "definition": "An alphanumeric encoding scheme for NORAD catalog numbers 100000-339999 in TLE format, where the first digit is replaced by a letter (A=10, B=11, ..., Z=35) allowing 6-digit numbers to fit in the 5-character TLE field. The API always accepts and returns integer NORAD catalog IDs.",
+      "relatedTerms": ["NORAD_CAT_ID", "TLE"]
+    },
+    {
+      "term": "CCSDS",
+      "label": "Consultative Committee for Space Data Systems",
+      "definition": "An international standards body for space data and information transfer systems. Defines the OMM, CDM, and other data exchange standards used by Space-Track.",
+      "relatedTerms": ["OMM", "CDM", "KVN"]
+    },
+    {
+      "term": "KVN",
+      "label": "Key-Value Notation",
+      "definition": "A CCSDS text format for OMM and CDM messages that uses keyword = value pairs. An alternative to XML representation of the same CCSDS standards.",
+      "relatedTerms": ["OMM", "CDM", "XML"]
+    },
+    {
+      "term": "18 SPCS",
+      "label": "18th Space Control Squadron",
+      "definition": "The US Space Force unit responsible for space surveillance and the Space Surveillance Network. Operator of the Space-Track.org service and originator of all GP element sets, CDMs, and TIPs published through the API.",
+      "relatedTerms": ["Space Surveillance Network", "SSN"]
+    },
+    {
+      "term": "boxscore",
+      "label": "Orbital Object Boxscore",
+      "definition": "A summary count of cataloged Earth-orbiting objects (payloads, rocket bodies, and debris) broken down by country of origin. Published daily.",
+      "relatedTerms": ["SATCAT", "OBJECT_TYPE", "COUNTRY"]
+    },
+    {
+      "term": "ODR",
+      "label": "Orbital Data Request",
+      "definition": "A formal request process for accessing advanced Space-Track services beyond the standard API, including Launch Conjunction Assessment, Early Orbit Determination, Anomaly Resolution, and Advanced Collision Avoidance.",
+      "relatedTerms": ["CDM", "conjunction"]
+    }
+  ]
+}

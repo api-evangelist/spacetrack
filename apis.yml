@@ -38,6 +38,16 @@ apis:
         url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
       - type: FinOps
         url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/openapi/openapi.json
+      - type: JSONSchema
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+      - type: JSONSchema
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+      - type: Vocabulary
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
+      - type: JSONLDContext
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
     contact:
       - FN: Space-Track Support
         email: https://www.space-track.org/contactus/
@@ -94,6 +104,10 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
     url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+  - type: OpenAPI
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/openapi/openapi.json
+  - type: JSONLDContext
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

@@ -1,0 +1,188 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/spacetrack/main/json-schema/gp-record.json",
+  "title": "GP Record",
+  "description": "General Perturbations (GP) orbital element set in CCSDS OMM format, as returned by the Space-Track /basicspacedata/query/class/gp/ endpoint.",
+  "type": "object",
+  "properties": {
+    "CCSDS_OMM_VERS": {
+      "type": "string",
+      "description": "CCSDS Orbit Mean-Elements Message version",
+      "examples": ["2.0"]
+    },
+    "COMMENT": {
+      "type": "string",
+      "description": "OMM comment field, typically 'GENERATED VIA SPACE-TRACK.ORG API'"
+    },
+    "CREATION_DATE": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time the element set was created, in UTC"
+    },
+    "ORIGINATOR": {
+      "type": "string",
+      "description": "Organization that originated the element set",
+      "examples": ["18 SPCS"]
+    },
+    "OBJECT_NAME": {
+      "type": "string",
+      "description": "Common name of the tracked object",
+      "examples": ["ISS (ZARYA)", "STARLINK-1234"]
+    },
+    "OBJECT_ID": {
+      "type": "string",
+      "description": "International designator in YYYY-NNNPPP format",
+      "pattern": "^[0-9]{4}-[0-9]{3}[A-Z]+$",
+      "examples": ["1998-067A", "2020-001A"]
+    },
+    "NORAD_CAT_ID": {
+      "type": "string",
+      "description": "NORAD catalog number (integer string, 1-339999)",
+      "pattern": "^[0-9]{1,6}$",
+      "examples": ["25544", "100001"]
+    },
+    "OBJECT_TYPE": {
+      "type": "string",
+      "description": "Object classification type",
+      "enum": ["PAYLOAD", "ROCKET BODY", "DEBRIS", "UNKNOWN", "TBA"]
+    },
+    "CLASSIFICATION_TYPE": {
+      "type": "string",
+      "description": "Classification type: U = Unclassified",
+      "enum": ["U"],
+      "examples": ["U"]
+    },
+    "INTLDES": {
+      "type": "string",
+      "description": "International designator (same as OBJECT_ID)",
+      "examples": ["1998-067A"]
+    },
+    "EPHEMERIS_TYPE": {
+      "type": "string",
+      "description": "Type of ephemeris: 0 = SGP4",
+      "enum": ["0", "1", "2", "3", "4", "5"],
+      "examples": ["0"]
+    },
+    "ELEMENT_SET_NO": {
+      "type": "string",
+      "description": "Element set number (incremented with each update)",
+      "examples": ["9999"]
+    },
+    "EPOCH": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Reference epoch of the element set in UTC"
+    },
+    "MEAN_MOTION": {
+      "type": "string",
+      "description": "Mean motion in revolutions per day",
+      "examples": ["15.49957327"]
+    },
+    "ECCENTRICITY": {
+      "type": "string",
+      "description": "Orbital eccentricity (dimensionless, 0.0 to <1.0)",
+      "examples": ["0.0001234"]
+    },
+    "INCLINATION": {
+      "type": "string",
+      "description": "Inclination of the orbit in degrees (0 to 180)",
+      "examples": ["51.6395", "97.8"]
+    },
+    "RA_OF_ASC_NODE": {
+      "type": "string",
+      "description": "Right ascension of ascending node in degrees (0 to 360)",
+      "examples": ["123.4567"]
+    },
+    "ARG_OF_PERICENTER": {
+      "type": "string",
+      "description": "Argument of pericenter in degrees (0 to 360)",
+      "examples": ["234.5678"]
+    },
+    "MEAN_ANOMALY": {
+      "type": "string",
+      "description": "Mean anomaly in degrees (0 to 360)",
+      "examples": ["345.6789"]
+    },
+    "MEAN_MOTION_DOT": {
+      "type": "string",
+      "description": "First time derivative of mean motion (rev/day^2), encodes atmospheric drag",
+      "examples": ["0.00001234", "-0.00000100"]
+    },
+    "MEAN_MOTION_DDOT": {
+      "type": "string",
+      "description": "Second time derivative of mean motion (rev/day^3)",
+      "examples": ["0", "0.00000000e+0"]
+    },
+    "BSTAR": {
+      "type": "string",
+      "description": "SGP4-type drag coefficient (BSTAR, in Earth radii^-1)",
+      "examples": ["0.00001234", "1.2345e-5"]
+    },
+    "REV_AT_EPOCH": {
+      "type": "string",
+      "description": "Revolution number at epoch",
+      "examples": ["43210"]
+    },
+    "SEMIMAJOR_AXIS": {
+      "type": "string",
+      "description": "Derived semi-major axis in km"
+    },
+    "PERIOD": {
+      "type": "string",
+      "description": "Derived orbital period in minutes",
+      "examples": ["92.68"]
+    },
+    "APOGEE": {
+      "type": "string",
+      "description": "Derived apogee altitude above Earth's surface in km",
+      "examples": ["421"]
+    },
+    "PERIGEE": {
+      "type": "string",
+      "description": "Derived perigee altitude above Earth's surface in km",
+      "examples": ["417"]
+    },
+    "DECAY_DATE": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Date of reentry/decay if the object has decayed; null if still in orbit"
+    },
+    "FILE": {
+      "type": "string",
+      "description": "Internal Space-Track file identifier"
+    },
+    "GP_ID": {
+      "type": "string",
+      "description": "Unique identifier for this GP element set record"
+    },
+    "TLE_LINE0": {
+      "type": "string",
+      "description": "TLE line 0 — object name line (only present in TLE/3LE format output)"
+    },
+    "TLE_LINE1": {
+      "type": "string",
+      "description": "TLE line 1 — 69-character first data line",
+      "minLength": 69,
+      "maxLength": 69,
+      "examples": ["1 25544U 98067A   24015.43750000  .00020137  00000-0  16538-3 0  9993"]
+    },
+    "TLE_LINE2": {
+      "type": "string",
+      "description": "TLE line 2 — 69-character second data line",
+      "minLength": 69,
+      "maxLength": 69,
+      "examples": ["2 25544  51.6395 123.4567 0001234 234.5678 345.6789 15.49957327 43210"]
+    }
+  },
+  "required": [
+    "NORAD_CAT_ID",
+    "EPOCH",
+    "MEAN_MOTION",
+    "ECCENTRICITY",
+    "INCLINATION",
+    "RA_OF_ASC_NODE",
+    "ARG_OF_PERICENTER",
+    "MEAN_ANOMALY"
+  ],
+  "additionalProperties": true
+}

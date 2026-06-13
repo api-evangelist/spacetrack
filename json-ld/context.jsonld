@@ -1,0 +1,289 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "st": "https://www.space-track.org/vocabulary#",
+
+    "GPRecord": {
+      "@id": "st:GPRecord",
+      "@type": "@id",
+      "rdfs:comment": "A General Perturbations (GP) orbital element set in CCSDS OMM format"
+    },
+
+    "SATCATRecord": {
+      "@id": "st:SATCATRecord",
+      "@type": "@id",
+      "rdfs:comment": "A satellite catalog record"
+    },
+
+    "CDMRecord": {
+      "@id": "st:CDMRecord",
+      "@type": "@id",
+      "rdfs:comment": "A Conjunction Data Message record"
+    },
+
+    "NORAD_CAT_ID": {
+      "@id": "st:noradCatId",
+      "@type": "xsd:string",
+      "rdfs:label": "NORAD Catalog Number",
+      "rdfs:comment": "Unique integer identifier assigned by NORAD to each tracked Earth-orbiting object"
+    },
+
+    "OBJECT_NAME": {
+      "@id": "schema:name",
+      "@type": "xsd:string",
+      "rdfs:label": "Object Name"
+    },
+
+    "OBJECT_ID": {
+      "@id": "st:internationalDesignator",
+      "@type": "xsd:string",
+      "rdfs:label": "International Designator",
+      "rdfs:comment": "COSPAR international designator in YYYY-NNNPPP format"
+    },
+
+    "INTLDES": {
+      "@id": "st:internationalDesignator",
+      "@type": "xsd:string"
+    },
+
+    "OBJECT_TYPE": {
+      "@id": "st:objectType",
+      "@type": "xsd:string",
+      "rdfs:label": "Object Type",
+      "rdfs:comment": "Classification of the tracked object: PAYLOAD, ROCKET BODY, DEBRIS, or UNKNOWN"
+    },
+
+    "EPOCH": {
+      "@id": "st:epoch",
+      "@type": "xsd:dateTime",
+      "rdfs:label": "Epoch",
+      "rdfs:comment": "Reference epoch for the orbital element set in UTC"
+    },
+
+    "CREATION_DATE": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+
+    "MEAN_MOTION": {
+      "@id": "st:meanMotion",
+      "@type": "xsd:string",
+      "rdfs:label": "Mean Motion",
+      "rdfs:comment": "Average angular velocity in revolutions per day",
+      "schema:unitText": "rev/day"
+    },
+
+    "ECCENTRICITY": {
+      "@id": "st:eccentricity",
+      "@type": "xsd:string",
+      "rdfs:label": "Eccentricity",
+      "rdfs:comment": "Dimensionless orbital shape parameter (0=circular, approaching 1=parabolic)"
+    },
+
+    "INCLINATION": {
+      "@id": "st:inclination",
+      "@type": "xsd:string",
+      "rdfs:label": "Inclination",
+      "rdfs:comment": "Angle between orbital plane and equatorial plane",
+      "schema:unitText": "degrees"
+    },
+
+    "RA_OF_ASC_NODE": {
+      "@id": "st:rightAscensionOfAscendingNode",
+      "@type": "xsd:string",
+      "rdfs:label": "Right Ascension of Ascending Node",
+      "schema:unitText": "degrees"
+    },
+
+    "ARG_OF_PERICENTER": {
+      "@id": "st:argumentOfPericenter",
+      "@type": "xsd:string",
+      "rdfs:label": "Argument of Pericenter",
+      "schema:unitText": "degrees"
+    },
+
+    "MEAN_ANOMALY": {
+      "@id": "st:meanAnomaly",
+      "@type": "xsd:string",
+      "rdfs:label": "Mean Anomaly",
+      "schema:unitText": "degrees"
+    },
+
+    "BSTAR": {
+      "@id": "st:bstarDragCoefficient",
+      "@type": "xsd:string",
+      "rdfs:label": "BSTAR Drag Coefficient",
+      "schema:unitText": "Earth radii^-1"
+    },
+
+    "MEAN_MOTION_DOT": {
+      "@id": "st:meanMotionFirstDerivative",
+      "@type": "xsd:string",
+      "rdfs:label": "Mean Motion First Derivative",
+      "schema:unitText": "rev/day^2"
+    },
+
+    "MEAN_MOTION_DDOT": {
+      "@id": "st:meanMotionSecondDerivative",
+      "@type": "xsd:string",
+      "rdfs:label": "Mean Motion Second Derivative",
+      "schema:unitText": "rev/day^3"
+    },
+
+    "REV_AT_EPOCH": {
+      "@id": "st:revAtEpoch",
+      "@type": "xsd:string",
+      "rdfs:label": "Revolution Number at Epoch"
+    },
+
+    "SEMIMAJOR_AXIS": {
+      "@id": "st:semimajorAxis",
+      "@type": "xsd:string",
+      "rdfs:label": "Semi-Major Axis",
+      "schema:unitText": "km"
+    },
+
+    "PERIOD": {
+      "@id": "st:orbitalPeriod",
+      "@type": "xsd:string",
+      "rdfs:label": "Orbital Period",
+      "schema:unitText": "minutes"
+    },
+
+    "APOGEE": {
+      "@id": "st:apogeeAltitude",
+      "@type": "xsd:string",
+      "rdfs:label": "Apogee Altitude",
+      "schema:unitText": "km"
+    },
+
+    "PERIGEE": {
+      "@id": "st:perigeeAltitude",
+      "@type": "xsd:string",
+      "rdfs:label": "Perigee Altitude",
+      "schema:unitText": "km"
+    },
+
+    "DECAY_DATE": {
+      "@id": "st:decayDate",
+      "@type": "xsd:date",
+      "rdfs:label": "Decay Date",
+      "rdfs:comment": "Date of orbital decay/reentry; null if still in orbit"
+    },
+
+    "TLE_LINE0": {
+      "@id": "st:tleLine0",
+      "@type": "xsd:string",
+      "rdfs:label": "TLE Line 0 (Name)"
+    },
+
+    "TLE_LINE1": {
+      "@id": "st:tleLine1",
+      "@type": "xsd:string",
+      "rdfs:label": "TLE Line 1"
+    },
+
+    "TLE_LINE2": {
+      "@id": "st:tleLine2",
+      "@type": "xsd:string",
+      "rdfs:label": "TLE Line 2"
+    },
+
+    "SATNAME": {
+      "@id": "schema:name",
+      "@type": "xsd:string",
+      "rdfs:label": "Satellite Name"
+    },
+
+    "COUNTRY": {
+      "@id": "schema:countryOfOrigin",
+      "@type": "xsd:string",
+      "rdfs:label": "Country Code"
+    },
+
+    "LAUNCH": {
+      "@id": "schema:datePublished",
+      "@type": "xsd:date",
+      "rdfs:label": "Launch Date"
+    },
+
+    "SITE": {
+      "@id": "st:launchSiteCode",
+      "@type": "xsd:string",
+      "rdfs:label": "Launch Site Code"
+    },
+
+    "DECAY": {
+      "@id": "st:decayDate",
+      "@type": "xsd:date",
+      "rdfs:label": "Decay Date"
+    },
+
+    "RCS_SIZE": {
+      "@id": "st:radarCrossSectionSize",
+      "@type": "xsd:string",
+      "rdfs:label": "Radar Cross-Section Size",
+      "rdfs:comment": "Size category: SMALL (<0.1 m^2), MEDIUM (0.1-1.0 m^2), LARGE (>1.0 m^2)"
+    },
+
+    "CURRENT": {
+      "@id": "st:currentlyTracked",
+      "@type": "xsd:string",
+      "rdfs:label": "Currently Tracked",
+      "rdfs:comment": "Y if the object is currently tracked in orbit; N if decayed"
+    },
+
+    "TCA": {
+      "@id": "st:timeOfClosestApproach",
+      "@type": "xsd:dateTime",
+      "rdfs:label": "Time of Closest Approach"
+    },
+
+    "MIN_RNG": {
+      "@id": "st:minimumRange",
+      "@type": "xsd:string",
+      "rdfs:label": "Minimum Range",
+      "schema:unitText": "meters"
+    },
+
+    "PC": {
+      "@id": "st:probabilityOfCollision",
+      "@type": "xsd:string",
+      "rdfs:label": "Probability of Collision"
+    },
+
+    "SAT1_ID": {
+      "@id": "st:primaryObjectId",
+      "@type": "xsd:string",
+      "rdfs:label": "Primary Object NORAD ID"
+    },
+
+    "SAT2_ID": {
+      "@id": "st:secondaryObjectId",
+      "@type": "xsd:string",
+      "rdfs:label": "Secondary Object NORAD ID"
+    },
+
+    "MSG_EPOCH": {
+      "@id": "st:messageEpoch",
+      "@type": "xsd:dateTime",
+      "rdfs:label": "Message Epoch"
+    },
+
+    "DECAY_EPOCH": {
+      "@id": "st:predictedDecayEpoch",
+      "@type": "xsd:dateTime",
+      "rdfs:label": "Predicted Decay Epoch"
+    },
+
+    "ORIGINATOR": {
+      "@id": "schema:creator",
+      "@type": "xsd:string",
+      "rdfs:label": "Originator"
+    }
+  }
+}

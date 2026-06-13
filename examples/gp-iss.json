@@ -1,0 +1,47 @@
+{
+  "description": "Example GP (General Perturbations) element set for the International Space Station (ISS), NORAD catalog ID 25544. Fetched via GET /basicspacedata/query/class/gp/NORAD_CAT_ID/25544/format/json/",
+  "request": {
+    "method": "GET",
+    "url": "https://www.space-track.org/basicspacedata/query/class/gp/NORAD_CAT_ID/25544/format/json/",
+    "headers": {
+      "Cookie": "chocolatechip=<session-cookie>"
+    }
+  },
+  "response": [
+    {
+      "CCSDS_OMM_VERS": "2.0",
+      "COMMENT": "GENERATED VIA SPACE-TRACK.ORG API",
+      "CREATION_DATE": "2024-01-15T12:00:00",
+      "ORIGINATOR": "18 SPCS",
+      "OBJECT_NAME": "ISS (ZARYA)",
+      "OBJECT_ID": "1998-067A",
+      "NORAD_CAT_ID": "25544",
+      "OBJECT_TYPE": "PAYLOAD",
+      "CLASSIFICATION_TYPE": "U",
+      "INTLDES": "1998-067A",
+      "EPHEMERIS_TYPE": "0",
+      "ELEMENT_SET_NO": "9999",
+      "EPOCH": "2024-01-15T10:30:00.000000",
+      "MEAN_MOTION": "15.49957327",
+      "ECCENTRICITY": "0.0001234",
+      "INCLINATION": "51.6395",
+      "RA_OF_ASC_NODE": "123.4567",
+      "ARG_OF_PERICENTER": "234.5678",
+      "MEAN_ANOMALY": "345.6789",
+      "MEAN_MOTION_DOT": "0.00020137",
+      "MEAN_MOTION_DDOT": "0",
+      "BSTAR": "0.000165380",
+      "REV_AT_EPOCH": "43210",
+      "SEMIMAJOR_AXIS": "6794.551",
+      "PERIOD": "92.68",
+      "APOGEE": "421",
+      "PERIGEE": "417",
+      "DECAY_DATE": null,
+      "FILE": "3624836",
+      "GP_ID": "234567890",
+      "TLE_LINE0": "ISS (ZARYA)",
+      "TLE_LINE1": "1 25544U 98067A   24015.43750000  .00020137  00000-0  16538-3 0  9993",
+      "TLE_LINE2": "2 25544  51.6395 123.4567 0001234 234.5678 345.6789 15.49957327 43210"
+    }
+  ]
+}

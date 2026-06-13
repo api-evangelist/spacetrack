@@ -1,0 +1,37 @@
+{
+  "description": "Example CDM (Conjunction Data Message) query returning close approach events. Demonstrates querying for recent conjunctions with probability of collision above threshold. Rate limit: 3 queries per day.",
+  "request": {
+    "method": "GET",
+    "url": "https://www.space-track.org/basicspacedata/query/class/cdm_public/TCA/%3Enow/PC/%3E0.0001/orderby/TCA%20asc/format/json/",
+    "headers": {
+      "Cookie": "chocolatechip=<session-cookie>"
+    }
+  },
+  "response": [
+    {
+      "CDM_ID": "987654321",
+      "CREATED": "2024-01-14T18:00:00",
+      "EMERGENCY_REPORTABLE": "N",
+      "TCA": "2024-01-16T04:23:17",
+      "MIN_RNG": "125.3",
+      "PC": "0.001234",
+      "SAT1_ID": "48274",
+      "SAT1_NAME": "STARLINK-2305",
+      "SAT1_OBJECT_TYPE": "PAYLOAD",
+      "SAT1_RCS": "LARGE",
+      "SAT1_EXCL_VOL": "Y",
+      "SAT2_ID": "34567",
+      "SAT2_NAME": "COSMOS 2251 DEB",
+      "SAT2_OBJECT_TYPE": "DEBRIS",
+      "SAT2_RCS": "SMALL",
+      "SAT2_EXCL_VOL": "N"
+    }
+  ],
+  "notes": [
+    "TCA = Time of Closest Approach",
+    "MIN_RNG = Minimum range at TCA in meters",
+    "PC = Probability of collision (0.0 to 1.0)",
+    "Rate limit: 3 queries per day for all conjunctions; 1 per hour for specific conjunction events",
+    "Use %3E for URL-encoded > operator, %3C for <"
+  ]
+}

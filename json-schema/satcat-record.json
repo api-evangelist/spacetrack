@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/spacetrack/main/json-schema/satcat-record.json",
+  "title": "SATCAT Record",
+  "description": "Satellite catalog (SATCAT) record as returned by the Space-Track /basicspacedata/query/class/satcat/ endpoint. Provides catalog metadata for all tracked Earth-orbiting objects.",
+  "type": "object",
+  "properties": {
+    "INTLDES": {
+      "type": "string",
+      "description": "International designator in YYYY-NNNPPP format",
+      "examples": ["1998-067A", "2020-001A"]
+    },
+    "NORAD_CAT_ID": {
+      "type": "string",
+      "description": "NORAD catalog number",
+      "examples": ["25544"]
+    },
+    "OBJECT_TYPE": {
+      "type": "string",
+      "description": "Object type classification",
+      "enum": ["PAYLOAD", "ROCKET BODY", "DEBRIS", "UNKNOWN", "TBA"]
+    },
+    "SATNAME": {
+      "type": "string",
+      "description": "Official satellite or object name",
+      "examples": ["ISS (ZARYA)", "STARLINK-1234"]
+    },
+    "COUNTRY": {
+      "type": "string",
+      "description": "Country or organization code of ownership/registration",
+      "examples": ["US", "CIS", "ISS", "PRC", "ESA"]
+    },
+    "LAUNCH": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Launch date in YYYY-MM-DD format (UTC)",
+      "examples": ["1998-11-20", "2020-01-07"]
+    },
+    "SITE": {
+      "type": ["string", "null"],
+      "description": "Launch site code corresponding to SATCAT launch_site class",
+      "examples": ["TTMTR", "AFETR", "SVOB"]
+    },
+    "DECAY": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Reentry/decay date if decayed; null if still in orbit",
+      "examples": ["2024-01-15", null]
+    },
+    "PERIOD": {
+      "type": ["string", "null"],
+      "description": "Orbital period in minutes",
+      "examples": ["92.68", "1436.1"]
+    },
+    "INCLINATION": {
+      "type": ["string", "null"],
+      "description": "Orbital inclination in degrees",
+      "examples": ["51.64", "97.8", "0.02"]
+    },
+    "APOGEE": {
+      "type": ["string", "null"],
+      "description": "Apogee altitude above Earth surface in km",
+      "examples": ["421", "35793"]
+    },
+    "PERIGEE": {
+      "type": ["string", "null"],
+      "description": "Perigee altitude above Earth surface in km",
+      "examples": ["417", "35775"]
+    },
+    "COMMENT": {
+      "type": ["string", "null"],
+      "description": "Optional comment text"
+    },
+    "COMMENTCODE": {
+      "type": ["string", "null"],
+      "description": "Optional comment code"
+    },
+    "RCSVALUE": {
+      "type": "string",
+      "description": "Radar cross-section value in m^2 (0 if unknown)",
+      "examples": ["0", "473.2"]
+    },
+    "RCS_SIZE": {
+      "type": ["string", "null"],
+      "description": "Radar cross-section size category",
+      "enum": ["SMALL", "MEDIUM", "LARGE", null],
+      "examples": ["LARGE", "SMALL"]
+    },
+    "FILE": {
+      "type": "string",
+      "description": "Internal file reference identifier"
+    },
+    "LAUNCH_YEAR": {
+      "type": "string",
+      "description": "4-digit launch year",
+      "pattern": "^[0-9]{4}$",
+      "examples": ["1998", "2020"]
+    },
+    "LAUNCH_NUM": {
+      "type": "string",
+      "description": "Sequential launch number within the launch year",
+      "examples": ["67", "1"]
+    },
+    "LAUNCH_PIECE": {
+      "type": "string",
+      "description": "Piece letter identifier within the launch",
+      "examples": ["A", "B", "AA", "ZZZ"]
+    },
+    "CURRENT": {
+      "type": "string",
+      "description": "Whether the object is currently tracked in orbit (Y = in orbit, N = decayed)",
+      "enum": ["Y", "N"]
+    },
+    "OBJECT_NAME": {
+      "type": "string",
+      "description": "Object name (same as SATNAME)",
+      "examples": ["ISS (ZARYA)"]
+    },
+    "OBJECT_ID": {
+      "type": "string",
+      "description": "International designator (same as INTLDES)",
+      "examples": ["1998-067A"]
+    },
+    "OBJECT_NUMBER": {
+      "type": "string",
+      "description": "NORAD catalog number as an integer string",
+      "examples": ["25544"]
+    }
+  },
+  "required": [
+    "NORAD_CAT_ID",
+    "INTLDES",
+    "OBJECT_TYPE",
+    "SATNAME",
+    "COUNTRY",
+    "CURRENT"
+  ],
+  "additionalProperties": true
+}
