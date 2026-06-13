@@ -1,0 +1,99 @@
+name: Space-Track
+description: US military space surveillance REST API providing Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for tracked satellites and debris operated by the 18th Space Control Squadron.
+image: https://www.space-track.org/favicon.ico
+tags:
+  - Space
+  - Satellites
+  - TLE
+  - Orbital Data
+  - Space Surveillance
+  - Debris Tracking
+  - Conjunction Data
+  - US Military
+created: "2026-06-13"
+modified: "2026-06-13"
+url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/apis.yml
+specificationVersion: "0.19"
+apis:
+  - name: Space-Track API
+    description: REST API for accessing space surveillance data including General Perturbations (GP/TLE) orbital element sets, satellite catalog, conjunction data messages, decay predictions, and tracking and impact predictions for all tracked Earth-orbiting objects.
+    image: https://www.space-track.org/favicon.ico
+    humanURL: https://www.space-track.org
+    baseURL: https://www.space-track.org
+    tags:
+      - Satellites
+      - TLE
+      - Orbital Elements
+      - Conjunction Data
+      - Debris
+      - Space Surveillance
+    properties:
+      - type: Documentation
+        url: https://www.space-track.org/documentation
+      - type: TermsOfService
+        url: https://www.space-track.org/documentation#user-agreement
+      - type: Plans
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+      - type: RateLimits
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+      - type: FinOps
+        url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+    contact:
+      - FN: Space-Track Support
+        email: https://www.space-track.org/contactus/
+    x-api-controllers:
+      - name: basicspacedata
+        baseURL: https://www.space-track.org/basicspacedata/query/class
+        classes:
+          - gp
+          - gp_history
+          - satcat
+          - satcat_change
+          - satcat_debut
+          - decay
+          - cdm_public
+          - tip
+          - boxscore
+          - launch_site
+          - announcement
+          - omm
+          - tle
+          - tle_latest
+          - tle_publish
+      - name: expandedspacedata
+        baseURL: https://www.space-track.org/expandedspacedata/query/class
+        classes:
+          - cdm
+          - maneuver
+          - maneuver_history
+          - organization
+          - satellite
+          - car
+    x-authentication:
+      type: session-cookie
+      loginEndpoint: https://www.space-track.org/ajaxauth/login
+      fields:
+        - identity
+        - password
+common:
+  - type: Portal
+    url: https://www.space-track.org
+  - type: Documentation
+    url: https://www.space-track.org/documentation
+  - type: Login
+    url: https://www.space-track.org/auth/login
+  - type: Registration
+    url: https://www.space-track.org/auth/createAccount
+  - type: TermsOfService
+    url: https://www.space-track.org/documentation#user-agreement
+  - type: Contact
+    url: https://www.space-track.org/contactus/
+  - type: Plans
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+  - type: RateLimits
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+  - type: FinOps
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

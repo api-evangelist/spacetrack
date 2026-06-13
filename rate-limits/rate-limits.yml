@@ -1,0 +1,63 @@
+name: Space-Track API Rate Limits
+description: Space-Track.org enforces rate limits to maintain consistent performance for all users. Limits apply globally and per data class. Users are expected to store data locally and minimize redundant requests.
+global:
+  - limit: 30
+    period: 1 minute
+    description: Maximum API requests per minute across all classes
+  - limit: 300
+    period: 1 hour
+    description: Maximum API requests per hour across all classes
+per_class:
+  - class: gp
+    controller: basicspacedata
+    description: Current General Perturbations (TLE) data for tracked objects
+    limit: 1
+    period: 1 hour
+    notes: Once every hour for TLE data; users should cache locally
+  - class: gp_history
+    controller: basicspacedata
+    description: Historical ephemerides database (138+ million element sets)
+    limit: 1
+    period: lifetime
+    notes: Full queries should be treated as once-per-lifetime; incremental updates only
+  - class: satcat
+    controller: basicspacedata
+    description: Satellite catalog information
+    limit: 1
+    period: 1 day
+    notes: Once per day after 1700 UTC; store locally and update incrementally
+  - class: cdm_public
+    controller: basicspacedata
+    description: Public conjunction data messages for all events
+    limit: 3
+    period: 1 day
+    notes: 3 requests per day for constellation-wide CDM queries
+  - class: cdm
+    controller: expandedspacedata
+    description: Full conjunction data messages for specific events
+    limit: 1
+    period: 1 hour
+    notes: Once per hour for specific conjunction event queries
+  - class: tip
+    controller: basicspacedata
+    description: Tracking and Impact Prediction messages (reentry)
+    limit: 1
+    period: 1 hour
+    notes: Standard limit; once every 10 minutes when reentry is within 12 hours
+  - class: decay
+    controller: basicspacedata
+    description: 60-day decay predictions
+    limit: 1
+    period: 1 week
+    notes: Once per week for 60-day decay data
+  - class: decay_history
+    controller: basicspacedata
+    description: Historical decay and reentry data
+    limit: 1
+    period: 1 day
+    notes: Once per day for decay history data
+policies:
+  - Avoid sending hundreds of individual queries; use comma-delimited NORAD catalog IDs to batch requests
+  - Store data locally; do not re-download data already retrieved
+  - Accounts may be suspended for violating usage policies or degrading site performance
+  - Rate limits are enforced per account; cross-process usage is not tracked by client libraries

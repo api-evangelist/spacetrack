@@ -1,0 +1,28 @@
+name: Space-Track Access Plans
+description: Space-Track.org provides free access to space surveillance data as a matter of US Government policy. All users must register for an individual account with a valid email address and agree to the user agreement. There are no paid tiers.
+plans:
+  - name: Free Registered Access
+    description: All registered users receive free access to Space-Track.org API data as US Government policy prohibits charging for website access. Users must apply for an account with a valid, working email address and agree to the user agreement. Access is subject to approval and may be revoked for policy violations.
+    url: https://www.space-track.org/auth/createAccount
+    price: 0.00
+    currency: USD
+    billing: none
+    features:
+      - GP (General Perturbations) orbital element sets for all tracked objects
+      - GP_History with 138+ million historical element sets
+      - SATCAT satellite catalog with metadata for all tracked objects
+      - CDM public conjunction data messages
+      - TIP (Tracking and Impact Prediction) reentry predictions
+      - Decay data and reentry history
+      - Boxscore summary statistics
+      - Launch site data
+      - Multiple output formats (JSON, CSV, XML, TLE, OMM, KVN, HTML)
+      - Expanded space data (CDM, maneuver, satellite details) for approved users
+    rateLimits:
+      requests_per_minute: 30
+      requests_per_hour: 300
+    registration:
+      required: true
+      url: https://www.space-track.org/auth/createAccount
+      approval: true
+      notes: Account requires valid email address. Sharing credentials is prohibited. Access may be suspended for policy violations.

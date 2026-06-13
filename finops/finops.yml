@@ -1,0 +1,30 @@
+name: Space-Track FinOps
+description: Space-Track.org is operated by the 18th Space Control Squadron of the US Space Force and is provided free of charge as a matter of US Government policy. There are no subscription fees, usage charges, or data costs.
+pricing_model: free
+cost: 0.00
+currency: USD
+notes: >
+  The present US Government policy is not to charge for website access to Space-Track.org.
+  All registered users receive the same level of access at no cost. The service is funded
+  by the US Department of Defense as part of the space situational awareness mission.
+cost_drivers:
+  - type: bandwidth
+    description: Users are encouraged to minimize bandwidth consumption by caching data locally, using incremental update queries, and batching requests for multiple objects
+    cost: none
+  - type: compute
+    description: No compute charges; all processing is handled server-side by Space-Track infrastructure
+    cost: none
+optimization:
+  - strategy: Local caching
+    description: Download data once and store locally; use incremental queries to retrieve only new or changed records
+  - strategy: Batch requests
+    description: Combine multiple NORAD catalog IDs in comma-delimited lists to retrieve data for many objects in a single API call
+  - strategy: Respect class-specific frequency limits
+    description: Follow per-class rate limits (e.g., SATCAT once/day, GP once/hour) to avoid account suspension
+  - strategy: Filter at query time
+    description: Use Space-Track query predicates (orderby, limit, filters) to retrieve only needed data rather than full datasets
+alternatives: []
+government_program:
+  operator: 18th Space Control Squadron, US Space Force
+  program: Space Situational Awareness Data Sharing
+  policy: Free public access to unclassified space surveillance data for all registered users
