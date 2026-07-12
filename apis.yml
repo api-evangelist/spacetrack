@@ -86,6 +86,10 @@ apis:
         - identity
         - password
 common:
+  - type: DomainSecurity
+    url: security/spacetrack-domain-security.yml
+  - type: Authentication
+    url: authentication/spacetrack-authentication.yml
   - type: Portal
     url: https://www.space-track.org
   - type: Documentation
