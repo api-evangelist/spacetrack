@@ -1,0 +1,163 @@
+openapi: 3.0.3
+info:
+  title: Space-Track Ancillary Decay Predictions API
+  description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
+  version: 1.0.0
+  contact:
+    name: Space-Track Support
+    url: https://www.space-track.org/contactus/
+  termsOfService: https://www.space-track.org/documentation#user-agreement
+  x-logo:
+    url: https://www.space-track.org/favicon.ico
+servers:
+- url: https://www.space-track.org
+  description: Space-Track production server
+tags:
+- name: Decay Predictions
+  description: Satellite reentry and decay predictions
+paths:
+  /basicspacedata/query/class/decay/{queryParams}:
+    get:
+      summary: Query decay predictions
+      description: 'Returns satellite reentry/decay predictions and historical decay data. Rate limit: 1 query per day. Download once and store locally; query with MSG_EPOCH>now-1 for updates.'
+      operationId: queryDecay
+      tags:
+      - Decay Predictions
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Decay prediction records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DecayRecord'
+              example:
+              - NORAD_CAT_ID: '12345'
+                OBJECT_NAME: DEBRIS 12345
+                INTLDES: 2010-025B
+                OBJECT_ID: 2010-025B
+                RCS: '0.1'
+                RCS_SIZE: SMALL
+                COUNTRY: US
+                MSG_EPOCH: '2024-01-10T00:00:00'
+                DECAY_EPOCH: '2024-01-15T00:00:00'
+                SOURCE: 18 SPCS
+                MSG_TYPE: Predicted
+                PRECEDENCE: '5'
+            text/csv:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+  schemas:
+    DecayRecord:
+      type: object
+      description: Satellite decay/reentry prediction record
+      properties:
+        NORAD_CAT_ID:
+          type: string
+          description: NORAD catalog number
+          example: '12345'
+        OBJECT_NAME:
+          type: string
+          description: Object name
+          example: DEBRIS 12345
+        INTLDES:
+          type: string
+          description: International designator
+          example: 2010-025B
+        OBJECT_ID:
+          type: string
+          description: Object identifier
+          example: 2010-025B
+        RCS:
+          type: string
+          description: Radar cross-section value (m^2)
+        RCS_SIZE:
+          type: string
+          description: RCS size category
+          enum:
+          - SMALL
+          - MEDIUM
+          - LARGE
+        COUNTRY:
+          type: string
+          description: Country of origin
+        MSG_EPOCH:
+          type: string
+          format: date-time
+          description: Message epoch (when prediction was issued)
+          example: '2024-01-10T00:00:00'
+        DECAY_EPOCH:
+          type: string
+          format: date-time
+          description: Predicted decay/reentry date-time
+          example: '2024-01-15T00:00:00'
+        SOURCE:
+          type: string
+          description: Source of the decay prediction
+          example: 18 SPCS
+        MSG_TYPE:
+          type: string
+          description: Message type
+          enum:
+          - Predicted
+          - Penetration
+          - Decayed
+          example: Predicted
+        PRECEDENCE:
+          type: string
+          description: Message precedence level
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: chocolatechip
+      description: Session cookie obtained by POSTing credentials to /ajaxauth/login
+x-query-guide:
+  syntax: 'REST queries use path segments: /class/{class}/FIELD/VALUE/format/FORMAT/'
+  operators:
+    exact: /FIELD/VALUE/
+    range: /FIELD/START--END/
+    greaterThan: /FIELD/%3EVALUE/
+    lessThan: /FIELD/%3CVALUE/
+    commaList: /FIELD/V1,V2,V3/
+    nullValue: /FIELD/null-val/
+    notNull: /FIELD/null-val/exclude/
+  formats:
+  - json
+  - csv
+  - xml
+  - html
+  - tle
+  - 3le
+  - kvn
+  commonFilters:
+    currentEpoch: EPOCH/%3Enow-30
+    specificObject: NORAD_CAT_ID/25544
+    multipleObjects: NORAD_CAT_ID/25544,43873,44506
+    catalogRange: NORAD_CAT_ID/25000--26000
+    recentMessages: MSG_EPOCH/%3Enow-1

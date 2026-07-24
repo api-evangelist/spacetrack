@@ -1,0 +1,377 @@
+openapi: 3.0.3
+info:
+  title: Space-Track Ancillary General Perturbations API
+  description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
+  version: 1.0.0
+  contact:
+    name: Space-Track Support
+    url: https://www.space-track.org/contactus/
+  termsOfService: https://www.space-track.org/documentation#user-agreement
+  x-logo:
+    url: https://www.space-track.org/favicon.ico
+servers:
+- url: https://www.space-track.org
+  description: Space-Track production server
+tags:
+- name: General Perturbations
+  description: Current and historical SGP4 keplerian element sets (TLE/OMM)
+paths:
+  /basicspacedata/query/class/gp/{queryParams}:
+    get:
+      summary: Query General Perturbations (GP) element sets
+      description: 'Returns the newest SGP4 keplerian element sets for tracked objects. Supports TLE, 3LE, OMM XML, OMM KVN, JSON, CSV, and HTML output formats. Rate limit: 1 query per hour for TLEs.'
+      operationId: queryGP
+      tags:
+      - General Perturbations
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Successful response with GP element sets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GPRecord'
+              example:
+              - CCSDS_OMM_VERS: '2.0'
+                COMMENT: GENERATED VIA SPACE-TRACK.ORG API
+                CREATION_DATE: '2024-01-15T12:00:00'
+                ORIGINATOR: 18 SPCS
+                OBJECT_NAME: ISS (ZARYA)
+                OBJECT_ID: 1998-067A
+                NORAD_CAT_ID: '25544'
+                EPOCH: '2024-01-15T10:30:00'
+                MEAN_MOTION: '15.49957327'
+                ECCENTRICITY: '0.0001234'
+                INCLINATION: '51.6395'
+                RA_OF_ASC_NODE: '123.4567'
+                ARG_OF_PERICENTER: '234.5678'
+                MEAN_ANOMALY: '345.6789'
+                EPHEMERIS_TYPE: '0'
+                CLASSIFICATION_TYPE: U
+                ELEMENT_SET_NO: '9999'
+                REV_AT_EPOCH: '43210'
+                BSTAR: '0.00001234'
+                MEAN_MOTION_DOT: '0.00001234'
+                MEAN_MOTION_DDOT: '0'
+            text/plain:
+              schema:
+                type: string
+                description: TLE or 3LE format text
+            text/csv:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+                description: OMM XML format
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/gp_history/{queryParams}:
+    get:
+      summary: Query GP element set history
+      description: 'Returns historical SGP4 element sets. Contains 138+ million element sets spanning the full history of space tracking. Rate limit: 1 query per lifetime — download once and store locally.'
+      operationId: queryGPHistory
+      tags:
+      - General Perturbations
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Historical GP element sets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GPRecord'
+            text/plain:
+              schema:
+                type: string
+            text/csv:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/omm/{queryParams}:
+    get:
+      summary: Query OMM element sets (deprecated)
+      description: DEPRECATED — use /class/gp/ instead. Returns Orbit Mean-Elements Message (OMM) data in XML format.
+      operationId: queryOMM
+      deprecated: true
+      tags:
+      - General Perturbations
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: OMM records (deprecated class, use gp instead)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GPRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/tle/{queryParams}:
+    get:
+      summary: Query TLE data (deprecated)
+      description: DEPRECATED — use /class/gp/ instead. Returns legacy TLE format element sets.
+      operationId: queryTLE
+      deprecated: true
+      tags:
+      - General Perturbations
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: TLE records (deprecated, use gp instead)
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/tle_latest/{queryParams}:
+    get:
+      summary: Query latest TLE data (deprecated)
+      description: DEPRECATED — use /class/gp/ instead. Returns the most recent TLE for each tracked object.
+      operationId: queryTLELatest
+      deprecated: true
+      tags:
+      - General Perturbations
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Latest TLE records (deprecated, use gp instead)
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/tle_publish/{queryParams}:
+    get:
+      summary: Query TLE publish timestamps (deprecated)
+      description: DEPRECATED — use /class/gp/ instead. Returns TLE publication timestamps.
+      operationId: queryTLEPublish
+      deprecated: true
+      tags:
+      - General Perturbations
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: TLE publish records (deprecated)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+  schemas:
+    GPRecord:
+      type: object
+      description: General Perturbations (GP) orbital element set in OMM format
+      properties:
+        CCSDS_OMM_VERS:
+          type: string
+          description: CCSDS OMM version
+          example: '2.0'
+        COMMENT:
+          type: string
+          description: OMM comment field
+        CREATION_DATE:
+          type: string
+          format: date-time
+          description: Element set creation date/time in UTC
+        ORIGINATOR:
+          type: string
+          description: Originating organization
+          example: 18 SPCS
+        OBJECT_NAME:
+          type: string
+          description: Common name of the object
+          example: ISS (ZARYA)
+        OBJECT_ID:
+          type: string
+          description: International designator (YYYY-NNNPPP)
+          example: 1998-067A
+        NORAD_CAT_ID:
+          type: string
+          description: NORAD catalog number
+          example: '25544'
+        OBJECT_TYPE:
+          type: string
+          description: Object classification
+          enum:
+          - PAYLOAD
+          - ROCKET BODY
+          - DEBRIS
+          - UNKNOWN
+          example: PAYLOAD
+        CLASSIFICATION_TYPE:
+          type: string
+          description: 'Classification type: U=Unclassified'
+          example: U
+        INTLDES:
+          type: string
+          description: International designator
+          example: 1998-067A
+        EPHEMERIS_TYPE:
+          type: string
+          description: Ephemeris type (0=SGP4)
+          example: '0'
+        ELEMENT_SET_NO:
+          type: string
+          description: Element set number
+          example: '9999'
+        EPOCH:
+          type: string
+          format: date-time
+          description: Epoch of the element set in UTC
+          example: '2024-01-15T10:30:00'
+        MEAN_MOTION:
+          type: string
+          description: Mean motion in revolutions per day
+          example: '15.49957327'
+        ECCENTRICITY:
+          type: string
+          description: Orbital eccentricity (dimensionless)
+          example: '0.0001234'
+        INCLINATION:
+          type: string
+          description: Orbital inclination in degrees
+          example: '51.6395'
+        RA_OF_ASC_NODE:
+          type: string
+          description: Right ascension of ascending node in degrees
+          example: '123.4567'
+        ARG_OF_PERICENTER:
+          type: string
+          description: Argument of pericenter in degrees
+          example: '234.5678'
+        MEAN_ANOMALY:
+          type: string
+          description: Mean anomaly in degrees
+          example: '345.6789'
+        MEAN_MOTION_DOT:
+          type: string
+          description: First derivative of mean motion (rev/day^2)
+          example: '0.00001234'
+        MEAN_MOTION_DDOT:
+          type: string
+          description: Second derivative of mean motion (rev/day^3)
+          example: '0'
+        BSTAR:
+          type: string
+          description: BSTAR drag term (earth radii^-1)
+          example: '0.00001234'
+        REV_AT_EPOCH:
+          type: string
+          description: Revolution number at epoch
+          example: '43210'
+        SEMIMAJOR_AXIS:
+          type: string
+          description: Semi-major axis in km
+        PERIOD:
+          type: string
+          description: Orbital period in minutes
+        APOGEE:
+          type: string
+          description: Apogee altitude in km
+        PERIGEE:
+          type: string
+          description: Perigee altitude in km
+        DECAY_DATE:
+          type: string
+          format: date
+          description: Date of decay/reentry (null if still in orbit)
+        FILE:
+          type: string
+          description: Internal file identifier
+        GP_ID:
+          type: string
+          description: Unique GP record identifier
+        TLE_LINE0:
+          type: string
+          description: TLE line 0 (object name, only in TLE/3LE format)
+        TLE_LINE1:
+          type: string
+          description: TLE line 1 (69 characters)
+          example: 1 25544U 98067A   24015.43750000  .00020137  00000-0  16538-3 0  9993
+        TLE_LINE2:
+          type: string
+          description: TLE line 2 (69 characters)
+          example: 2 25544  51.6395 123.4567 0001234 234.5678 345.6789 15.49957327 43210
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: chocolatechip
+      description: Session cookie obtained by POSTing credentials to /ajaxauth/login
+x-query-guide:
+  syntax: 'REST queries use path segments: /class/{class}/FIELD/VALUE/format/FORMAT/'
+  operators:
+    exact: /FIELD/VALUE/
+    range: /FIELD/START--END/
+    greaterThan: /FIELD/%3EVALUE/
+    lessThan: /FIELD/%3CVALUE/
+    commaList: /FIELD/V1,V2,V3/
+    nullValue: /FIELD/null-val/
+    notNull: /FIELD/null-val/exclude/
+  formats:
+  - json
+  - csv
+  - xml
+  - html
+  - tle
+  - 3le
+  - kvn
+  commonFilters:
+    currentEpoch: EPOCH/%3Enow-30
+    specificObject: NORAD_CAT_ID/25544
+    multipleObjects: NORAD_CAT_ID/25544,43873,44506
+    catalogRange: NORAD_CAT_ID/25000--26000
+    recentMessages: MSG_EPOCH/%3Enow-1

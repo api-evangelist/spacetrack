@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Space-Track Ancillary Conjunction Data API
+  description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
+  version: 1.0.0
+  contact:
+    name: Space-Track Support
+    url: https://www.space-track.org/contactus/
+  termsOfService: https://www.space-track.org/documentation#user-agreement
+  x-logo:
+    url: https://www.space-track.org/favicon.ico
+servers:
+- url: https://www.space-track.org
+  description: Space-Track production server
+tags:
+- name: Conjunction Data
+  description: Spaceflight safety conjunction data messages (CDM)
+paths:
+  /basicspacedata/query/class/cdm_public/{queryParams}:
+    get:
+      summary: Query public Conjunction Data Messages (CDM)
+      description: 'Returns conjunction data messages for close approaches between tracked objects. Rate limit: 3 queries per day for all conjunctions; 1 per hour for specific events.'
+      operationId: queryCDMPublic
+      tags:
+      - Conjunction Data
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Conjunction data message records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CDMRecord'
+            text/csv:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+                description: CCSDS CDM XML format
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /expandedspacedata/query/class/cdm/{queryParams}:
+    get:
+      summary: Query full Conjunction Data Messages (CDM)
+      description: Returns full conjunction data messages from the expanded space data controller. Requires elevated access. Contains complete CCSDS-compliant CDM data including covariance matrices.
+      operationId: queryCDM
+      tags:
+      - Conjunction Data
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Full CDM records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CDMRecord'
+            application/xml:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /expandedspacedata/query/class/car/{queryParams}:
+    get:
+      summary: Query Conjunction Assessment Results (CAR)
+      description: Returns conjunction assessment result records from the expanded space data controller.
+      operationId: queryCAR
+      tags:
+      - Conjunction Data
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: CAR records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  description: Conjunction assessment result
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+  schemas:
+    CDMRecord:
+      type: object
+      description: Conjunction Data Message (CDM) record following CCSDS standard
+      properties:
+        CDM_ID:
+          type: string
+          description: Unique CDM identifier
+        CREATED:
+          type: string
+          format: date-time
+          description: CDM creation date-time in UTC
+        EMERGENCY_REPORTABLE:
+          type: string
+          description: Whether the conjunction is emergency reportable (Y/N)
+        TCA:
+          type: string
+          format: date-time
+          description: Time of closest approach in UTC
+        MIN_RNG:
+          type: string
+          description: Minimum range at TCA in meters
+        PC:
+          type: string
+          description: Probability of collision
+        SAT1_ID:
+          type: string
+          description: NORAD catalog ID of first object
+        SAT1_NAME:
+          type: string
+          description: Name of first object
+        SAT1_OBJECT_TYPE:
+          type: string
+          description: Type of first object
+        SAT1_RCS:
+          type: string
+          description: RCS of first object
+        SAT2_ID:
+          type: string
+          description: NORAD catalog ID of second object
+        SAT2_NAME:
+          type: string
+          description: Name of second object
+        SAT2_OBJECT_TYPE:
+          type: string
+          description: Type of second object
+        SAT2_RCS:
+          type: string
+          description: RCS of second object
+        SAT2_EXCL_VOL:
+          type: string
+          description: Exclusion volume for second object
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: chocolatechip
+      description: Session cookie obtained by POSTing credentials to /ajaxauth/login
+x-query-guide:
+  syntax: 'REST queries use path segments: /class/{class}/FIELD/VALUE/format/FORMAT/'
+  operators:
+    exact: /FIELD/VALUE/
+    range: /FIELD/START--END/
+    greaterThan: /FIELD/%3EVALUE/
+    lessThan: /FIELD/%3CVALUE/
+    commaList: /FIELD/V1,V2,V3/
+    nullValue: /FIELD/null-val/
+    notNull: /FIELD/null-val/exclude/
+  formats:
+  - json
+  - csv
+  - xml
+  - html
+  - tle
+  - 3le
+  - kvn
+  commonFilters:
+    currentEpoch: EPOCH/%3Enow-30
+    specificObject: NORAD_CAT_ID/25544
+    multipleObjects: NORAD_CAT_ID/25544,43873,44506
+    catalogRange: NORAD_CAT_ID/25000--26000
+    recentMessages: MSG_EPOCH/%3Enow-1

@@ -1,0 +1,312 @@
+openapi: 3.0.3
+info:
+  title: Space-Track Ancillary API
+  description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
+  version: 1.0.0
+  contact:
+    name: Space-Track Support
+    url: https://www.space-track.org/contactus/
+  termsOfService: https://www.space-track.org/documentation#user-agreement
+  x-logo:
+    url: https://www.space-track.org/favicon.ico
+servers:
+- url: https://www.space-track.org
+  description: Space-Track production server
+tags:
+- name: Ancillary
+  description: Launch sites, boxscore, announcements, and other reference data
+paths:
+  /basicspacedata/query/class/boxscore/{queryParams}:
+    get:
+      summary: Query orbital object boxscore by country
+      description: 'Returns a country-level accounting of cataloged objects in orbit. Rate limit: 1 query per day after 17:00 UTC.'
+      operationId: queryBoxscore
+      tags:
+      - Ancillary
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Boxscore records by country
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BoxscoreRecord'
+            text/csv:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/launch_site/{queryParams}:
+    get:
+      summary: Query launch sites
+      description: Returns reference data for all recognized launch sites and their codes used in the satellite catalog.
+      operationId: queryLaunchSite
+      tags:
+      - Ancillary
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Launch site records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LaunchSiteRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/announcement/{queryParams}:
+    get:
+      summary: Query announcements
+      description: Returns system and operational announcements from Space-Track.
+      operationId: queryAnnouncement
+      tags:
+      - Ancillary
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Announcement records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnnouncementRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+  /expandedspacedata/query/class/maneuver/{queryParams}:
+    get:
+      summary: Query satellite maneuver data
+      description: Returns maneuver records for satellites that have performed propulsive maneuvers. Requires expanded space data access.
+      operationId: queryManeuver
+      tags:
+      - Ancillary
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Maneuver records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ManeuverRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+  /expandedspacedata/query/class/maneuver_history/{queryParams}:
+    get:
+      summary: Query historical satellite maneuver data
+      description: Returns historical maneuver records for satellites.
+      operationId: queryManeuverHistory
+      tags:
+      - Ancillary
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Historical maneuver records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ManeuverRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+  /expandedspacedata/query/class/organization/{queryParams}:
+    get:
+      summary: Query organization data
+      description: Returns organization reference data for satellite operators and countries.
+      operationId: queryOrganization
+      tags:
+      - Ancillary
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Organization records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+  schemas:
+    AnnouncementRecord:
+      type: object
+      description: Space-Track system announcement
+      properties:
+        announcement_text:
+          type: string
+          description: Announcement content
+        announcement_start:
+          type: string
+          format: date-time
+          description: Announcement start date-time
+        announcement_end:
+          type: string
+          format: date-time
+          description: Announcement end date-time
+        announcement_type:
+          type: string
+          description: Category or type of announcement
+    LaunchSiteRecord:
+      type: object
+      description: Launch site reference record
+      properties:
+        SITE_CODE:
+          type: string
+          description: Short code for the launch site
+          example: TTMTR
+        LAUNCH_SITE:
+          type: string
+          description: Full name of the launch site
+          example: Tyuratam Missile and Space Center, Baikonur, Kazakhstan
+    OrganizationRecord:
+      type: object
+      description: Organization reference record
+      properties:
+        ORG_ID:
+          type: string
+          description: Organization identifier
+        ORG_NAME:
+          type: string
+          description: Organization name
+        ORG_TYPE:
+          type: string
+          description: Organization type (government, commercial, etc.)
+        COUNTRY:
+          type: string
+          description: Country of the organization
+        COUNTRY_CODE:
+          type: string
+          description: Country code
+    BoxscoreRecord:
+      type: object
+      description: Country-level boxscore of orbital objects
+      properties:
+        COUNTRY:
+          type: string
+          description: Country code
+          example: US
+        SPADOC_CD:
+          type: string
+          description: SPADOC country code
+        ORBITAL_TBA:
+          type: string
+          description: Objects with TBA status still in orbit
+        ORBITAL_PAYLOAD_COUNT:
+          type: string
+          description: Number of payloads in orbit
+        ORBITAL_ROCKET_BODY_COUNT:
+          type: string
+          description: Number of rocket bodies in orbit
+        ORBITAL_DEBRIS_COUNT:
+          type: string
+          description: Number of debris objects in orbit
+        ORBITAL_TOTAL_COUNT:
+          type: string
+          description: Total number of objects in orbit
+        DECAYED_PAYLOAD_COUNT:
+          type: string
+          description: Number of decayed payloads
+        DECAYED_ROCKET_BODY_COUNT:
+          type: string
+          description: Number of decayed rocket bodies
+        DECAYED_DEBRIS_COUNT:
+          type: string
+          description: Number of decayed debris objects
+        DECAYED_TOTAL_COUNT:
+          type: string
+          description: Total number of decayed objects
+        COUNTRY_TOTAL:
+          type: string
+          description: Total objects attributed to this country
+    ManeuverRecord:
+      type: object
+      description: Satellite maneuver record
+      properties:
+        NORAD_CAT_ID:
+          type: string
+          description: NORAD catalog number
+        OBJECT_NAME:
+          type: string
+          description: Object name
+        MANEUVER_EPOCH:
+          type: string
+          format: date-time
+          description: Epoch of the maneuver in UTC
+        DELTA_V:
+          type: string
+          description: Delta-V of the maneuver (m/s)
+        MANEUVER_TYPE:
+          type: string
+          description: Type of maneuver
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: chocolatechip
+      description: Session cookie obtained by POSTing credentials to /ajaxauth/login
+x-query-guide:
+  syntax: 'REST queries use path segments: /class/{class}/FIELD/VALUE/format/FORMAT/'
+  operators:
+    exact: /FIELD/VALUE/
+    range: /FIELD/START--END/
+    greaterThan: /FIELD/%3EVALUE/
+    lessThan: /FIELD/%3CVALUE/
+    commaList: /FIELD/V1,V2,V3/
+    nullValue: /FIELD/null-val/
+    notNull: /FIELD/null-val/exclude/
+  formats:
+  - json
+  - csv
+  - xml
+  - html
+  - tle
+  - 3le
+  - kvn
+  commonFilters:
+    currentEpoch: EPOCH/%3Enow-30
+    specificObject: NORAD_CAT_ID/25544
+    multipleObjects: NORAD_CAT_ID/25544,43873,44506
+    catalogRange: NORAD_CAT_ID/25000--26000
+    recentMessages: MSG_EPOCH/%3Enow-1

@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: Space-Track Ancillary Tracking and Impact Prediction API
+  description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
+  version: 1.0.0
+  contact:
+    name: Space-Track Support
+    url: https://www.space-track.org/contactus/
+  termsOfService: https://www.space-track.org/documentation#user-agreement
+  x-logo:
+    url: https://www.space-track.org/favicon.ico
+servers:
+- url: https://www.space-track.org
+  description: Space-Track production server
+tags:
+- name: Tracking and Impact Prediction
+  description: Reentry tracking and impact prediction messages (TIP)
+paths:
+  /basicspacedata/query/class/tip/{queryParams}:
+    get:
+      summary: Query Tracking and Impact Prediction (TIP) messages
+      description: 'Returns reentry tracking and impact prediction messages for hazardous debris. Rate limit: 1 per hour normally; 1 per 10 minutes when reentry is within 12 hours.'
+      operationId: queryTIP
+      tags:
+      - Tracking and Impact Prediction
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: TIP message records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TIPRecord'
+            text/csv:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+  schemas:
+    TIPRecord:
+      type: object
+      description: Tracking and Impact Prediction (TIP) message record
+      properties:
+        NORAD_CAT_ID:
+          type: string
+          description: NORAD catalog number
+        OBJECT_NAME:
+          type: string
+          description: Object name
+        INTLDES:
+          type: string
+          description: International designator
+        MSG_EPOCH:
+          type: string
+          format: date-time
+          description: Message issue epoch in UTC
+        DECAY_EPOCH:
+          type: string
+          format: date-time
+          description: Predicted reentry epoch in UTC
+        WINDOW:
+          type: string
+          description: Reentry window (+/- minutes)
+        REV:
+          type: string
+          description: Revolution number
+        DIRECTION:
+          type: string
+          description: Direction of reentry (ascending/descending)
+        LAT:
+          type: string
+          description: Predicted reentry latitude in degrees
+        LON:
+          type: string
+          description: Predicted reentry longitude in degrees
+        INCL:
+          type: string
+          description: Orbital inclination in degrees
+        NEXT_REPORT:
+          type: string
+          description: Expected time of next report
+        ID:
+          type: string
+          description: TIP message identifier
+        HIGH_INTEREST:
+          type: string
+          description: High-interest flag (Y/N)
+        OBJECT_TYPE:
+          type: string
+          description: Object type
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: chocolatechip
+      description: Session cookie obtained by POSTing credentials to /ajaxauth/login
+x-query-guide:
+  syntax: 'REST queries use path segments: /class/{class}/FIELD/VALUE/format/FORMAT/'
+  operators:
+    exact: /FIELD/VALUE/
+    range: /FIELD/START--END/
+    greaterThan: /FIELD/%3EVALUE/
+    lessThan: /FIELD/%3CVALUE/
+    commaList: /FIELD/V1,V2,V3/
+    nullValue: /FIELD/null-val/
+    notNull: /FIELD/null-val/exclude/
+  formats:
+  - json
+  - csv
+  - xml
+  - html
+  - tle
+  - 3le
+  - kvn
+  commonFilters:
+    currentEpoch: EPOCH/%3Enow-30
+    specificObject: NORAD_CAT_ID/25544
+    multipleObjects: NORAD_CAT_ID/25544,43873,44506
+    catalogRange: NORAD_CAT_ID/25000--26000
+    recentMessages: MSG_EPOCH/%3Enow-1

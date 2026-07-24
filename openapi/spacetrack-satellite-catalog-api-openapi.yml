@@ -1,0 +1,335 @@
+openapi: 3.0.3
+info:
+  title: Space-Track Ancillary Satellite Catalog API
+  description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
+  version: 1.0.0
+  contact:
+    name: Space-Track Support
+    url: https://www.space-track.org/contactus/
+  termsOfService: https://www.space-track.org/documentation#user-agreement
+  x-logo:
+    url: https://www.space-track.org/favicon.ico
+servers:
+- url: https://www.space-track.org
+  description: Space-Track production server
+tags:
+- name: Satellite Catalog
+  description: Catalog metadata for all tracked Earth-orbiting objects
+paths:
+  /basicspacedata/query/class/satcat/{queryParams}:
+    get:
+      summary: Query Satellite Catalog (SATCAT)
+      description: 'Returns catalog metadata for tracked Earth-orbiting objects including payloads, rocket bodies, and debris. Rate limit: 1 query per day after 17:00 UTC.'
+      operationId: querySATCAT
+      tags:
+      - Satellite Catalog
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Satellite catalog records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SATCATRecord'
+              example:
+              - INTLDES: 1998-067A
+                NORAD_CAT_ID: '25544'
+                OBJECT_TYPE: PAYLOAD
+                SATNAME: ISS (ZARYA)
+                COUNTRY: ISS
+                LAUNCH: '1998-11-20'
+                SITE: TTMTR
+                DECAY: null
+                PERIOD: '92.68'
+                INCLINATION: '51.64'
+                APOGEE: '421'
+                PERIGEE: '417'
+                COMMENT: null
+                COMMENTCODE: null
+                RCSVALUE: '0'
+                RCS_SIZE: LARGE
+                FILE: '12345'
+                LAUNCH_YEAR: '1998'
+                LAUNCH_NUM: '67'
+                LAUNCH_PIECE: A
+                CURRENT: Y
+                OBJECT_NAME: ISS (ZARYA)
+                OBJECT_ID: 1998-067A
+                OBJECT_NUMBER: '25544'
+            text/csv:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/satcat_change/{queryParams}:
+    get:
+      summary: Query SATCAT changes
+      description: Returns records of changes to the satellite catalog. Useful for tracking updates to object names, status, and classifications.
+      operationId: querySATCATChange
+      tags:
+      - Satellite Catalog
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: SATCAT change records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SATCATChangeRecord'
+            text/csv:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /basicspacedata/query/class/satcat_debut/{queryParams}:
+    get:
+      summary: Query recently cataloged objects (SATCAT debut)
+      description: 'Returns recently cataloged objects — new entrants to the satellite catalog. Rate limit: 1 query per day after 17:00 UTC.'
+      operationId: querySATCATDebut
+      tags:
+      - Satellite Catalog
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Newly cataloged objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SATCATRecord'
+            text/csv:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+      security:
+      - sessionCookie: []
+  /expandedspacedata/query/class/satellite/{queryParams}:
+    get:
+      summary: Query expanded satellite data
+      description: Returns expanded satellite data with additional fields beyond the basic SATCAT.
+      operationId: querySatellite
+      tags:
+      - Satellite Catalog
+      parameters:
+      - $ref: '#/components/parameters/queryParams'
+      responses:
+        '200':
+          description: Expanded satellite records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SATCATRecord'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security:
+      - sessionCookie: []
+components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
+  schemas:
+    SATCATRecord:
+      type: object
+      description: Satellite catalog (SATCAT) record
+      properties:
+        INTLDES:
+          type: string
+          description: International designator
+          example: 1998-067A
+        NORAD_CAT_ID:
+          type: string
+          description: NORAD catalog number
+          example: '25544'
+        OBJECT_TYPE:
+          type: string
+          description: Object type classification
+          enum:
+          - PAYLOAD
+          - ROCKET BODY
+          - DEBRIS
+          - UNKNOWN
+          - TBA
+          example: PAYLOAD
+        SATNAME:
+          type: string
+          description: Satellite/object name
+          example: ISS (ZARYA)
+        COUNTRY:
+          type: string
+          description: Country of origin or registration code
+          example: ISS
+        LAUNCH:
+          type: string
+          format: date
+          description: Launch date
+          example: '1998-11-20'
+        SITE:
+          type: string
+          description: Launch site code
+          example: TTMTR
+        DECAY:
+          type: string
+          format: date
+          nullable: true
+          description: Decay/reentry date (null if still in orbit)
+        PERIOD:
+          type: string
+          description: Orbital period in minutes
+          example: '92.68'
+        INCLINATION:
+          type: string
+          description: Orbital inclination in degrees
+          example: '51.64'
+        APOGEE:
+          type: string
+          description: Apogee altitude in km
+          example: '421'
+        PERIGEE:
+          type: string
+          description: Perigee altitude in km
+          example: '417'
+        RCS_SIZE:
+          type: string
+          description: Radar cross-section size category
+          enum:
+          - SMALL
+          - MEDIUM
+          - LARGE
+          example: LARGE
+        RCSVALUE:
+          type: string
+          description: Radar cross-section value (m^2)
+        LAUNCH_YEAR:
+          type: string
+          description: 4-digit launch year
+          example: '1998'
+        LAUNCH_NUM:
+          type: string
+          description: Launch number within year
+          example: '67'
+        LAUNCH_PIECE:
+          type: string
+          description: Piece identifier within launch
+          example: A
+        CURRENT:
+          type: string
+          description: Is object currently being tracked (Y/N)
+          enum:
+          - Y
+          - N
+          example: Y
+        OBJECT_NAME:
+          type: string
+          description: Object name
+          example: ISS (ZARYA)
+        OBJECT_ID:
+          type: string
+          description: International designator
+          example: 1998-067A
+        OBJECT_NUMBER:
+          type: string
+          description: NORAD catalog number as integer string
+          example: '25544'
+        FILE:
+          type: string
+          description: Internal file reference
+        COMMENT:
+          type: string
+          nullable: true
+          description: Optional comment
+        COMMENTCODE:
+          type: string
+          nullable: true
+          description: Optional comment code
+    SATCATChangeRecord:
+      type: object
+      description: Record of a change to the satellite catalog
+      properties:
+        NORAD_CAT_ID:
+          type: string
+          description: NORAD catalog number
+        OBJECT_NAME:
+          type: string
+          description: Current object name
+        INTLDES:
+          type: string
+          description: International designator
+        CHANGE_DATE:
+          type: string
+          format: date-time
+          description: Date the change was recorded
+        FIELD_CHANGED:
+          type: string
+          description: Name of the field that was changed
+        OLD_VALUE:
+          type: string
+          description: Previous field value
+        NEW_VALUE:
+          type: string
+          description: Updated field value
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: chocolatechip
+      description: Session cookie obtained by POSTing credentials to /ajaxauth/login
+x-query-guide:
+  syntax: 'REST queries use path segments: /class/{class}/FIELD/VALUE/format/FORMAT/'
+  operators:
+    exact: /FIELD/VALUE/
+    range: /FIELD/START--END/
+    greaterThan: /FIELD/%3EVALUE/
+    lessThan: /FIELD/%3CVALUE/
+    commaList: /FIELD/V1,V2,V3/
+    nullValue: /FIELD/null-val/
+    notNull: /FIELD/null-val/exclude/
+  formats:
+  - json
+  - csv
+  - xml
+  - html
+  - tle
+  - 3le
+  - kvn
+  commonFilters:
+    currentEpoch: EPOCH/%3Enow-30
+    specificObject: NORAD_CAT_ID/25544
+    multipleObjects: NORAD_CAT_ID/25544,43873,44506
+    catalogRange: NORAD_CAT_ID/25000--26000
+    recentMessages: MSG_EPOCH/%3Enow-1
