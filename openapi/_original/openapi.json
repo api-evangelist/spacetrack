@@ -1,0 +1,1770 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Space-Track API",
+    "description": "US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Space-Track Support",
+      "url": "https://www.space-track.org/contactus/"
+    },
+    "termsOfService": "https://www.space-track.org/documentation#user-agreement",
+    "x-logo": {
+      "url": "https://www.space-track.org/favicon.ico"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://www.space-track.org",
+      "description": "Space-Track production server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Session-based authentication via cookie"
+    },
+    {
+      "name": "General Perturbations",
+      "description": "Current and historical SGP4 keplerian element sets (TLE/OMM)"
+    },
+    {
+      "name": "Satellite Catalog",
+      "description": "Catalog metadata for all tracked Earth-orbiting objects"
+    },
+    {
+      "name": "Conjunction Data",
+      "description": "Spaceflight safety conjunction data messages (CDM)"
+    },
+    {
+      "name": "Decay Predictions",
+      "description": "Satellite reentry and decay predictions"
+    },
+    {
+      "name": "Tracking and Impact Prediction",
+      "description": "Reentry tracking and impact prediction messages (TIP)"
+    },
+    {
+      "name": "Ancillary",
+      "description": "Launch sites, boxscore, announcements, and other reference data"
+    }
+  ],
+  "paths": {
+    "/ajaxauth/login": {
+      "post": {
+        "summary": "Login to Space-Track",
+        "description": "Authenticates the user and sets a session cookie required for all subsequent API requests. Credentials must not be shared between users.",
+        "operationId": "login",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": ["identity", "password"],
+                "properties": {
+                  "identity": {
+                    "type": "string",
+                    "description": "Registered email address (username)",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "description": "Account password"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful. Session cookie is set.",
+            "headers": {
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Session cookie for subsequent requests"
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
+          }
+        }
+      }
+    },
+    "/basicspacedata/query/class/gp/{queryParams}": {
+      "get": {
+        "summary": "Query General Perturbations (GP) element sets",
+        "description": "Returns the newest SGP4 keplerian element sets for tracked objects. Supports TLE, 3LE, OMM XML, OMM KVN, JSON, CSV, and HTML output formats. Rate limit: 1 query per hour for TLEs.",
+        "operationId": "queryGP",
+        "tags": ["General Perturbations"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response with GP element sets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GPRecord"
+                  }
+                },
+                "example": [
+                  {
+                    "CCSDS_OMM_VERS": "2.0",
+                    "COMMENT": "GENERATED VIA SPACE-TRACK.ORG API",
+                    "CREATION_DATE": "2024-01-15T12:00:00",
+                    "ORIGINATOR": "18 SPCS",
+                    "OBJECT_NAME": "ISS (ZARYA)",
+                    "OBJECT_ID": "1998-067A",
+                    "NORAD_CAT_ID": "25544",
+                    "EPOCH": "2024-01-15T10:30:00",
+                    "MEAN_MOTION": "15.49957327",
+                    "ECCENTRICITY": "0.0001234",
+                    "INCLINATION": "51.6395",
+                    "RA_OF_ASC_NODE": "123.4567",
+                    "ARG_OF_PERICENTER": "234.5678",
+                    "MEAN_ANOMALY": "345.6789",
+                    "EPHEMERIS_TYPE": "0",
+                    "CLASSIFICATION_TYPE": "U",
+                    "ELEMENT_SET_NO": "9999",
+                    "REV_AT_EPOCH": "43210",
+                    "BSTAR": "0.00001234",
+                    "MEAN_MOTION_DOT": "0.00001234",
+                    "MEAN_MOTION_DDOT": "0"
+                  }
+                ]
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "TLE or 3LE format text"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "OMM XML format"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/gp_history/{queryParams}": {
+      "get": {
+        "summary": "Query GP element set history",
+        "description": "Returns historical SGP4 element sets. Contains 138+ million element sets spanning the full history of space tracking. Rate limit: 1 query per lifetime — download once and store locally.",
+        "operationId": "queryGPHistory",
+        "tags": ["General Perturbations"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Historical GP element sets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GPRecord"
+                  }
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/satcat/{queryParams}": {
+      "get": {
+        "summary": "Query Satellite Catalog (SATCAT)",
+        "description": "Returns catalog metadata for tracked Earth-orbiting objects including payloads, rocket bodies, and debris. Rate limit: 1 query per day after 17:00 UTC.",
+        "operationId": "querySATCAT",
+        "tags": ["Satellite Catalog"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Satellite catalog records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SATCATRecord"
+                  }
+                },
+                "example": [
+                  {
+                    "INTLDES": "1998-067A",
+                    "NORAD_CAT_ID": "25544",
+                    "OBJECT_TYPE": "PAYLOAD",
+                    "SATNAME": "ISS (ZARYA)",
+                    "COUNTRY": "ISS",
+                    "LAUNCH": "1998-11-20",
+                    "SITE": "TTMTR",
+                    "DECAY": null,
+                    "PERIOD": "92.68",
+                    "INCLINATION": "51.64",
+                    "APOGEE": "421",
+                    "PERIGEE": "417",
+                    "COMMENT": null,
+                    "COMMENTCODE": null,
+                    "RCSVALUE": "0",
+                    "RCS_SIZE": "LARGE",
+                    "FILE": "12345",
+                    "LAUNCH_YEAR": "1998",
+                    "LAUNCH_NUM": "67",
+                    "LAUNCH_PIECE": "A",
+                    "CURRENT": "Y",
+                    "OBJECT_NAME": "ISS (ZARYA)",
+                    "OBJECT_ID": "1998-067A",
+                    "OBJECT_NUMBER": "25544"
+                  }
+                ]
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/satcat_change/{queryParams}": {
+      "get": {
+        "summary": "Query SATCAT changes",
+        "description": "Returns records of changes to the satellite catalog. Useful for tracking updates to object names, status, and classifications.",
+        "operationId": "querySATCATChange",
+        "tags": ["Satellite Catalog"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SATCAT change records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SATCATChangeRecord"
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/satcat_debut/{queryParams}": {
+      "get": {
+        "summary": "Query recently cataloged objects (SATCAT debut)",
+        "description": "Returns recently cataloged objects — new entrants to the satellite catalog. Rate limit: 1 query per day after 17:00 UTC.",
+        "operationId": "querySATCATDebut",
+        "tags": ["Satellite Catalog"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Newly cataloged objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SATCATRecord"
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/decay/{queryParams}": {
+      "get": {
+        "summary": "Query decay predictions",
+        "description": "Returns satellite reentry/decay predictions and historical decay data. Rate limit: 1 query per day. Download once and store locally; query with MSG_EPOCH>now-1 for updates.",
+        "operationId": "queryDecay",
+        "tags": ["Decay Predictions"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Decay prediction records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DecayRecord"
+                  }
+                },
+                "example": [
+                  {
+                    "NORAD_CAT_ID": "12345",
+                    "OBJECT_NAME": "DEBRIS 12345",
+                    "INTLDES": "2010-025B",
+                    "OBJECT_ID": "2010-025B",
+                    "RCS": "0.1",
+                    "RCS_SIZE": "SMALL",
+                    "COUNTRY": "US",
+                    "MSG_EPOCH": "2024-01-10T00:00:00",
+                    "DECAY_EPOCH": "2024-01-15T00:00:00",
+                    "SOURCE": "18 SPCS",
+                    "MSG_TYPE": "Predicted",
+                    "PRECEDENCE": "5"
+                  }
+                ]
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/cdm_public/{queryParams}": {
+      "get": {
+        "summary": "Query public Conjunction Data Messages (CDM)",
+        "description": "Returns conjunction data messages for close approaches between tracked objects. Rate limit: 3 queries per day for all conjunctions; 1 per hour for specific events.",
+        "operationId": "queryCDMPublic",
+        "tags": ["Conjunction Data"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conjunction data message records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CDMRecord"
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string",
+                  "description": "CCSDS CDM XML format"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/tip/{queryParams}": {
+      "get": {
+        "summary": "Query Tracking and Impact Prediction (TIP) messages",
+        "description": "Returns reentry tracking and impact prediction messages for hazardous debris. Rate limit: 1 per hour normally; 1 per 10 minutes when reentry is within 12 hours.",
+        "operationId": "queryTIP",
+        "tags": ["Tracking and Impact Prediction"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TIP message records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TIPRecord"
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/boxscore/{queryParams}": {
+      "get": {
+        "summary": "Query orbital object boxscore by country",
+        "description": "Returns a country-level accounting of cataloged objects in orbit. Rate limit: 1 query per day after 17:00 UTC.",
+        "operationId": "queryBoxscore",
+        "tags": ["Ancillary"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Boxscore records by country",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BoxscoreRecord"
+                  }
+                }
+              },
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/launch_site/{queryParams}": {
+      "get": {
+        "summary": "Query launch sites",
+        "description": "Returns reference data for all recognized launch sites and their codes used in the satellite catalog.",
+        "operationId": "queryLaunchSite",
+        "tags": ["Ancillary"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Launch site records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LaunchSiteRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/announcement/{queryParams}": {
+      "get": {
+        "summary": "Query announcements",
+        "description": "Returns system and operational announcements from Space-Track.",
+        "operationId": "queryAnnouncement",
+        "tags": ["Ancillary"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Announcement records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AnnouncementRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/omm/{queryParams}": {
+      "get": {
+        "summary": "Query OMM element sets (deprecated)",
+        "description": "DEPRECATED — use /class/gp/ instead. Returns Orbit Mean-Elements Message (OMM) data in XML format.",
+        "operationId": "queryOMM",
+        "deprecated": true,
+        "tags": ["General Perturbations"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OMM records (deprecated class, use gp instead)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GPRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/tle/{queryParams}": {
+      "get": {
+        "summary": "Query TLE data (deprecated)",
+        "description": "DEPRECATED — use /class/gp/ instead. Returns legacy TLE format element sets.",
+        "operationId": "queryTLE",
+        "deprecated": true,
+        "tags": ["General Perturbations"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TLE records (deprecated, use gp instead)",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/tle_latest/{queryParams}": {
+      "get": {
+        "summary": "Query latest TLE data (deprecated)",
+        "description": "DEPRECATED — use /class/gp/ instead. Returns the most recent TLE for each tracked object.",
+        "operationId": "queryTLELatest",
+        "deprecated": true,
+        "tags": ["General Perturbations"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Latest TLE records (deprecated, use gp instead)",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/basicspacedata/query/class/tle_publish/{queryParams}": {
+      "get": {
+        "summary": "Query TLE publish timestamps (deprecated)",
+        "description": "DEPRECATED — use /class/gp/ instead. Returns TLE publication timestamps.",
+        "operationId": "queryTLEPublish",
+        "deprecated": true,
+        "tags": ["General Perturbations"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TLE publish records (deprecated)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/expandedspacedata/query/class/cdm/{queryParams}": {
+      "get": {
+        "summary": "Query full Conjunction Data Messages (CDM)",
+        "description": "Returns full conjunction data messages from the expanded space data controller. Requires elevated access. Contains complete CCSDS-compliant CDM data including covariance matrices.",
+        "operationId": "queryCDM",
+        "tags": ["Conjunction Data"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Full CDM records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CDMRecord"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/expandedspacedata/query/class/maneuver/{queryParams}": {
+      "get": {
+        "summary": "Query satellite maneuver data",
+        "description": "Returns maneuver records for satellites that have performed propulsive maneuvers. Requires expanded space data access.",
+        "operationId": "queryManeuver",
+        "tags": ["Ancillary"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Maneuver records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManeuverRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/expandedspacedata/query/class/maneuver_history/{queryParams}": {
+      "get": {
+        "summary": "Query historical satellite maneuver data",
+        "description": "Returns historical maneuver records for satellites.",
+        "operationId": "queryManeuverHistory",
+        "tags": ["Ancillary"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Historical maneuver records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ManeuverRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/expandedspacedata/query/class/organization/{queryParams}": {
+      "get": {
+        "summary": "Query organization data",
+        "description": "Returns organization reference data for satellite operators and countries.",
+        "operationId": "queryOrganization",
+        "tags": ["Ancillary"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrganizationRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/expandedspacedata/query/class/satellite/{queryParams}": {
+      "get": {
+        "summary": "Query expanded satellite data",
+        "description": "Returns expanded satellite data with additional fields beyond the basic SATCAT.",
+        "operationId": "querySatellite",
+        "tags": ["Satellite Catalog"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expanded satellite records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SATCATRecord"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    },
+    "/expandedspacedata/query/class/car/{queryParams}": {
+      "get": {
+        "summary": "Query Conjunction Assessment Results (CAR)",
+        "description": "Returns conjunction assessment result records from the expanded space data controller.",
+        "operationId": "queryCAR",
+        "tags": ["Conjunction Data"],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/queryParams"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CAR records",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "description": "Conjunction assessment result"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "sessionCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "chocolatechip",
+        "description": "Session cookie obtained by POSTing credentials to /ajaxauth/login"
+      }
+    },
+    "parameters": {
+      "queryParams": {
+        "name": "queryParams",
+        "in": "path",
+        "required": false,
+        "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/",
+        "schema": {
+          "type": "string",
+          "default": "",
+          "example": "NORAD_CAT_ID/25544/format/json/"
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Authentication required. Login at /ajaxauth/login first to obtain a session cookie."
+      },
+      "RateLimited": {
+        "description": "Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply."
+      }
+    },
+    "schemas": {
+      "GPRecord": {
+        "type": "object",
+        "description": "General Perturbations (GP) orbital element set in OMM format",
+        "properties": {
+          "CCSDS_OMM_VERS": {
+            "type": "string",
+            "description": "CCSDS OMM version",
+            "example": "2.0"
+          },
+          "COMMENT": {
+            "type": "string",
+            "description": "OMM comment field"
+          },
+          "CREATION_DATE": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Element set creation date/time in UTC"
+          },
+          "ORIGINATOR": {
+            "type": "string",
+            "description": "Originating organization",
+            "example": "18 SPCS"
+          },
+          "OBJECT_NAME": {
+            "type": "string",
+            "description": "Common name of the object",
+            "example": "ISS (ZARYA)"
+          },
+          "OBJECT_ID": {
+            "type": "string",
+            "description": "International designator (YYYY-NNNPPP)",
+            "example": "1998-067A"
+          },
+          "NORAD_CAT_ID": {
+            "type": "string",
+            "description": "NORAD catalog number",
+            "example": "25544"
+          },
+          "OBJECT_TYPE": {
+            "type": "string",
+            "description": "Object classification",
+            "enum": ["PAYLOAD", "ROCKET BODY", "DEBRIS", "UNKNOWN"],
+            "example": "PAYLOAD"
+          },
+          "CLASSIFICATION_TYPE": {
+            "type": "string",
+            "description": "Classification type: U=Unclassified",
+            "example": "U"
+          },
+          "INTLDES": {
+            "type": "string",
+            "description": "International designator",
+            "example": "1998-067A"
+          },
+          "EPHEMERIS_TYPE": {
+            "type": "string",
+            "description": "Ephemeris type (0=SGP4)",
+            "example": "0"
+          },
+          "ELEMENT_SET_NO": {
+            "type": "string",
+            "description": "Element set number",
+            "example": "9999"
+          },
+          "EPOCH": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Epoch of the element set in UTC",
+            "example": "2024-01-15T10:30:00"
+          },
+          "MEAN_MOTION": {
+            "type": "string",
+            "description": "Mean motion in revolutions per day",
+            "example": "15.49957327"
+          },
+          "ECCENTRICITY": {
+            "type": "string",
+            "description": "Orbital eccentricity (dimensionless)",
+            "example": "0.0001234"
+          },
+          "INCLINATION": {
+            "type": "string",
+            "description": "Orbital inclination in degrees",
+            "example": "51.6395"
+          },
+          "RA_OF_ASC_NODE": {
+            "type": "string",
+            "description": "Right ascension of ascending node in degrees",
+            "example": "123.4567"
+          },
+          "ARG_OF_PERICENTER": {
+            "type": "string",
+            "description": "Argument of pericenter in degrees",
+            "example": "234.5678"
+          },
+          "MEAN_ANOMALY": {
+            "type": "string",
+            "description": "Mean anomaly in degrees",
+            "example": "345.6789"
+          },
+          "MEAN_MOTION_DOT": {
+            "type": "string",
+            "description": "First derivative of mean motion (rev/day^2)",
+            "example": "0.00001234"
+          },
+          "MEAN_MOTION_DDOT": {
+            "type": "string",
+            "description": "Second derivative of mean motion (rev/day^3)",
+            "example": "0"
+          },
+          "BSTAR": {
+            "type": "string",
+            "description": "BSTAR drag term (earth radii^-1)",
+            "example": "0.00001234"
+          },
+          "REV_AT_EPOCH": {
+            "type": "string",
+            "description": "Revolution number at epoch",
+            "example": "43210"
+          },
+          "SEMIMAJOR_AXIS": {
+            "type": "string",
+            "description": "Semi-major axis in km"
+          },
+          "PERIOD": {
+            "type": "string",
+            "description": "Orbital period in minutes"
+          },
+          "APOGEE": {
+            "type": "string",
+            "description": "Apogee altitude in km"
+          },
+          "PERIGEE": {
+            "type": "string",
+            "description": "Perigee altitude in km"
+          },
+          "DECAY_DATE": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of decay/reentry (null if still in orbit)"
+          },
+          "FILE": {
+            "type": "string",
+            "description": "Internal file identifier"
+          },
+          "GP_ID": {
+            "type": "string",
+            "description": "Unique GP record identifier"
+          },
+          "TLE_LINE0": {
+            "type": "string",
+            "description": "TLE line 0 (object name, only in TLE/3LE format)"
+          },
+          "TLE_LINE1": {
+            "type": "string",
+            "description": "TLE line 1 (69 characters)",
+            "example": "1 25544U 98067A   24015.43750000  .00020137  00000-0  16538-3 0  9993"
+          },
+          "TLE_LINE2": {
+            "type": "string",
+            "description": "TLE line 2 (69 characters)",
+            "example": "2 25544  51.6395 123.4567 0001234 234.5678 345.6789 15.49957327 43210"
+          }
+        }
+      },
+      "SATCATRecord": {
+        "type": "object",
+        "description": "Satellite catalog (SATCAT) record",
+        "properties": {
+          "INTLDES": {
+            "type": "string",
+            "description": "International designator",
+            "example": "1998-067A"
+          },
+          "NORAD_CAT_ID": {
+            "type": "string",
+            "description": "NORAD catalog number",
+            "example": "25544"
+          },
+          "OBJECT_TYPE": {
+            "type": "string",
+            "description": "Object type classification",
+            "enum": ["PAYLOAD", "ROCKET BODY", "DEBRIS", "UNKNOWN", "TBA"],
+            "example": "PAYLOAD"
+          },
+          "SATNAME": {
+            "type": "string",
+            "description": "Satellite/object name",
+            "example": "ISS (ZARYA)"
+          },
+          "COUNTRY": {
+            "type": "string",
+            "description": "Country of origin or registration code",
+            "example": "ISS"
+          },
+          "LAUNCH": {
+            "type": "string",
+            "format": "date",
+            "description": "Launch date",
+            "example": "1998-11-20"
+          },
+          "SITE": {
+            "type": "string",
+            "description": "Launch site code",
+            "example": "TTMTR"
+          },
+          "DECAY": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "Decay/reentry date (null if still in orbit)"
+          },
+          "PERIOD": {
+            "type": "string",
+            "description": "Orbital period in minutes",
+            "example": "92.68"
+          },
+          "INCLINATION": {
+            "type": "string",
+            "description": "Orbital inclination in degrees",
+            "example": "51.64"
+          },
+          "APOGEE": {
+            "type": "string",
+            "description": "Apogee altitude in km",
+            "example": "421"
+          },
+          "PERIGEE": {
+            "type": "string",
+            "description": "Perigee altitude in km",
+            "example": "417"
+          },
+          "RCS_SIZE": {
+            "type": "string",
+            "description": "Radar cross-section size category",
+            "enum": ["SMALL", "MEDIUM", "LARGE"],
+            "example": "LARGE"
+          },
+          "RCSVALUE": {
+            "type": "string",
+            "description": "Radar cross-section value (m^2)"
+          },
+          "LAUNCH_YEAR": {
+            "type": "string",
+            "description": "4-digit launch year",
+            "example": "1998"
+          },
+          "LAUNCH_NUM": {
+            "type": "string",
+            "description": "Launch number within year",
+            "example": "67"
+          },
+          "LAUNCH_PIECE": {
+            "type": "string",
+            "description": "Piece identifier within launch",
+            "example": "A"
+          },
+          "CURRENT": {
+            "type": "string",
+            "description": "Is object currently being tracked (Y/N)",
+            "enum": ["Y", "N"],
+            "example": "Y"
+          },
+          "OBJECT_NAME": {
+            "type": "string",
+            "description": "Object name",
+            "example": "ISS (ZARYA)"
+          },
+          "OBJECT_ID": {
+            "type": "string",
+            "description": "International designator",
+            "example": "1998-067A"
+          },
+          "OBJECT_NUMBER": {
+            "type": "string",
+            "description": "NORAD catalog number as integer string",
+            "example": "25544"
+          },
+          "FILE": {
+            "type": "string",
+            "description": "Internal file reference"
+          },
+          "COMMENT": {
+            "type": "string",
+            "nullable": true,
+            "description": "Optional comment"
+          },
+          "COMMENTCODE": {
+            "type": "string",
+            "nullable": true,
+            "description": "Optional comment code"
+          }
+        }
+      },
+      "SATCATChangeRecord": {
+        "type": "object",
+        "description": "Record of a change to the satellite catalog",
+        "properties": {
+          "NORAD_CAT_ID": {
+            "type": "string",
+            "description": "NORAD catalog number"
+          },
+          "OBJECT_NAME": {
+            "type": "string",
+            "description": "Current object name"
+          },
+          "INTLDES": {
+            "type": "string",
+            "description": "International designator"
+          },
+          "CHANGE_DATE": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date the change was recorded"
+          },
+          "FIELD_CHANGED": {
+            "type": "string",
+            "description": "Name of the field that was changed"
+          },
+          "OLD_VALUE": {
+            "type": "string",
+            "description": "Previous field value"
+          },
+          "NEW_VALUE": {
+            "type": "string",
+            "description": "Updated field value"
+          }
+        }
+      },
+      "DecayRecord": {
+        "type": "object",
+        "description": "Satellite decay/reentry prediction record",
+        "properties": {
+          "NORAD_CAT_ID": {
+            "type": "string",
+            "description": "NORAD catalog number",
+            "example": "12345"
+          },
+          "OBJECT_NAME": {
+            "type": "string",
+            "description": "Object name",
+            "example": "DEBRIS 12345"
+          },
+          "INTLDES": {
+            "type": "string",
+            "description": "International designator",
+            "example": "2010-025B"
+          },
+          "OBJECT_ID": {
+            "type": "string",
+            "description": "Object identifier",
+            "example": "2010-025B"
+          },
+          "RCS": {
+            "type": "string",
+            "description": "Radar cross-section value (m^2)"
+          },
+          "RCS_SIZE": {
+            "type": "string",
+            "description": "RCS size category",
+            "enum": ["SMALL", "MEDIUM", "LARGE"]
+          },
+          "COUNTRY": {
+            "type": "string",
+            "description": "Country of origin"
+          },
+          "MSG_EPOCH": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Message epoch (when prediction was issued)",
+            "example": "2024-01-10T00:00:00"
+          },
+          "DECAY_EPOCH": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Predicted decay/reentry date-time",
+            "example": "2024-01-15T00:00:00"
+          },
+          "SOURCE": {
+            "type": "string",
+            "description": "Source of the decay prediction",
+            "example": "18 SPCS"
+          },
+          "MSG_TYPE": {
+            "type": "string",
+            "description": "Message type",
+            "enum": ["Predicted", "Penetration", "Decayed"],
+            "example": "Predicted"
+          },
+          "PRECEDENCE": {
+            "type": "string",
+            "description": "Message precedence level"
+          }
+        }
+      },
+      "CDMRecord": {
+        "type": "object",
+        "description": "Conjunction Data Message (CDM) record following CCSDS standard",
+        "properties": {
+          "CDM_ID": {
+            "type": "string",
+            "description": "Unique CDM identifier"
+          },
+          "CREATED": {
+            "type": "string",
+            "format": "date-time",
+            "description": "CDM creation date-time in UTC"
+          },
+          "EMERGENCY_REPORTABLE": {
+            "type": "string",
+            "description": "Whether the conjunction is emergency reportable (Y/N)"
+          },
+          "TCA": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Time of closest approach in UTC"
+          },
+          "MIN_RNG": {
+            "type": "string",
+            "description": "Minimum range at TCA in meters"
+          },
+          "PC": {
+            "type": "string",
+            "description": "Probability of collision"
+          },
+          "SAT1_ID": {
+            "type": "string",
+            "description": "NORAD catalog ID of first object"
+          },
+          "SAT1_NAME": {
+            "type": "string",
+            "description": "Name of first object"
+          },
+          "SAT1_OBJECT_TYPE": {
+            "type": "string",
+            "description": "Type of first object"
+          },
+          "SAT1_RCS": {
+            "type": "string",
+            "description": "RCS of first object"
+          },
+          "SAT2_ID": {
+            "type": "string",
+            "description": "NORAD catalog ID of second object"
+          },
+          "SAT2_NAME": {
+            "type": "string",
+            "description": "Name of second object"
+          },
+          "SAT2_OBJECT_TYPE": {
+            "type": "string",
+            "description": "Type of second object"
+          },
+          "SAT2_RCS": {
+            "type": "string",
+            "description": "RCS of second object"
+          },
+          "SAT2_EXCL_VOL": {
+            "type": "string",
+            "description": "Exclusion volume for second object"
+          }
+        }
+      },
+      "TIPRecord": {
+        "type": "object",
+        "description": "Tracking and Impact Prediction (TIP) message record",
+        "properties": {
+          "NORAD_CAT_ID": {
+            "type": "string",
+            "description": "NORAD catalog number"
+          },
+          "OBJECT_NAME": {
+            "type": "string",
+            "description": "Object name"
+          },
+          "INTLDES": {
+            "type": "string",
+            "description": "International designator"
+          },
+          "MSG_EPOCH": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Message issue epoch in UTC"
+          },
+          "DECAY_EPOCH": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Predicted reentry epoch in UTC"
+          },
+          "WINDOW": {
+            "type": "string",
+            "description": "Reentry window (+/- minutes)"
+          },
+          "REV": {
+            "type": "string",
+            "description": "Revolution number"
+          },
+          "DIRECTION": {
+            "type": "string",
+            "description": "Direction of reentry (ascending/descending)"
+          },
+          "LAT": {
+            "type": "string",
+            "description": "Predicted reentry latitude in degrees"
+          },
+          "LON": {
+            "type": "string",
+            "description": "Predicted reentry longitude in degrees"
+          },
+          "INCL": {
+            "type": "string",
+            "description": "Orbital inclination in degrees"
+          },
+          "NEXT_REPORT": {
+            "type": "string",
+            "description": "Expected time of next report"
+          },
+          "ID": {
+            "type": "string",
+            "description": "TIP message identifier"
+          },
+          "HIGH_INTEREST": {
+            "type": "string",
+            "description": "High-interest flag (Y/N)"
+          },
+          "OBJECT_TYPE": {
+            "type": "string",
+            "description": "Object type"
+          }
+        }
+      },
+      "BoxscoreRecord": {
+        "type": "object",
+        "description": "Country-level boxscore of orbital objects",
+        "properties": {
+          "COUNTRY": {
+            "type": "string",
+            "description": "Country code",
+            "example": "US"
+          },
+          "SPADOC_CD": {
+            "type": "string",
+            "description": "SPADOC country code"
+          },
+          "ORBITAL_TBA": {
+            "type": "string",
+            "description": "Objects with TBA status still in orbit"
+          },
+          "ORBITAL_PAYLOAD_COUNT": {
+            "type": "string",
+            "description": "Number of payloads in orbit"
+          },
+          "ORBITAL_ROCKET_BODY_COUNT": {
+            "type": "string",
+            "description": "Number of rocket bodies in orbit"
+          },
+          "ORBITAL_DEBRIS_COUNT": {
+            "type": "string",
+            "description": "Number of debris objects in orbit"
+          },
+          "ORBITAL_TOTAL_COUNT": {
+            "type": "string",
+            "description": "Total number of objects in orbit"
+          },
+          "DECAYED_PAYLOAD_COUNT": {
+            "type": "string",
+            "description": "Number of decayed payloads"
+          },
+          "DECAYED_ROCKET_BODY_COUNT": {
+            "type": "string",
+            "description": "Number of decayed rocket bodies"
+          },
+          "DECAYED_DEBRIS_COUNT": {
+            "type": "string",
+            "description": "Number of decayed debris objects"
+          },
+          "DECAYED_TOTAL_COUNT": {
+            "type": "string",
+            "description": "Total number of decayed objects"
+          },
+          "COUNTRY_TOTAL": {
+            "type": "string",
+            "description": "Total objects attributed to this country"
+          }
+        }
+      },
+      "LaunchSiteRecord": {
+        "type": "object",
+        "description": "Launch site reference record",
+        "properties": {
+          "SITE_CODE": {
+            "type": "string",
+            "description": "Short code for the launch site",
+            "example": "TTMTR"
+          },
+          "LAUNCH_SITE": {
+            "type": "string",
+            "description": "Full name of the launch site",
+            "example": "Tyuratam Missile and Space Center, Baikonur, Kazakhstan"
+          }
+        }
+      },
+      "AnnouncementRecord": {
+        "type": "object",
+        "description": "Space-Track system announcement",
+        "properties": {
+          "announcement_text": {
+            "type": "string",
+            "description": "Announcement content"
+          },
+          "announcement_start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Announcement start date-time"
+          },
+          "announcement_end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Announcement end date-time"
+          },
+          "announcement_type": {
+            "type": "string",
+            "description": "Category or type of announcement"
+          }
+        }
+      },
+      "ManeuverRecord": {
+        "type": "object",
+        "description": "Satellite maneuver record",
+        "properties": {
+          "NORAD_CAT_ID": {
+            "type": "string",
+            "description": "NORAD catalog number"
+          },
+          "OBJECT_NAME": {
+            "type": "string",
+            "description": "Object name"
+          },
+          "MANEUVER_EPOCH": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Epoch of the maneuver in UTC"
+          },
+          "DELTA_V": {
+            "type": "string",
+            "description": "Delta-V of the maneuver (m/s)"
+          },
+          "MANEUVER_TYPE": {
+            "type": "string",
+            "description": "Type of maneuver"
+          }
+        }
+      },
+      "OrganizationRecord": {
+        "type": "object",
+        "description": "Organization reference record",
+        "properties": {
+          "ORG_ID": {
+            "type": "string",
+            "description": "Organization identifier"
+          },
+          "ORG_NAME": {
+            "type": "string",
+            "description": "Organization name"
+          },
+          "ORG_TYPE": {
+            "type": "string",
+            "description": "Organization type (government, commercial, etc.)"
+          },
+          "COUNTRY": {
+            "type": "string",
+            "description": "Country of the organization"
+          },
+          "COUNTRY_CODE": {
+            "type": "string",
+            "description": "Country code"
+          }
+        }
+      }
+    }
+  },
+  "x-query-guide": {
+    "syntax": "REST queries use path segments: /class/{class}/FIELD/VALUE/format/FORMAT/",
+    "operators": {
+      "exact": "/FIELD/VALUE/",
+      "range": "/FIELD/START--END/",
+      "greaterThan": "/FIELD/%3EVALUE/",
+      "lessThan": "/FIELD/%3CVALUE/",
+      "commaList": "/FIELD/V1,V2,V3/",
+      "nullValue": "/FIELD/null-val/",
+      "notNull": "/FIELD/null-val/exclude/"
+    },
+    "formats": ["json", "csv", "xml", "html", "tle", "3le", "kvn"],
+    "commonFilters": {
+      "currentEpoch": "EPOCH/%3Enow-30",
+      "specificObject": "NORAD_CAT_ID/25544",
+      "multipleObjects": "NORAD_CAT_ID/25544,43873,44506",
+      "catalogRange": "NORAD_CAT_ID/25000--26000",
+      "recentMessages": "MSG_EPOCH/%3Enow-1"
+    }
+  }
+}

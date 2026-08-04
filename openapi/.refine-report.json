@@ -1,0 +1,26 @@
+{
+  "provider": "spacetrack",
+  "sources": [
+    "spacetrack-ancillary-api-openapi.yml",
+    "spacetrack-authentication-api-openapi.yml",
+    "spacetrack-conjunction-data-api-openapi.yml",
+    "spacetrack-decay-predictions-api-openapi.yml",
+    "spacetrack-general-perturbations-api-openapi.yml",
+    "spacetrack-satellite-catalog-api-openapi.yml",
+    "spacetrack-tracking-and-impact-prediction-api-openapi.yml"
+  ],
+  "outputs": [
+    "spacetrack-ancillary-api-openapi.yml",
+    "spacetrack-authentication-api-openapi.yml",
+    "spacetrack-conjunction-data-api-openapi.yml",
+    "spacetrack-decay-predictions-api-openapi.yml",
+    "spacetrack-general-perturbations-api-openapi.yml",
+    "spacetrack-satellite-catalog-api-openapi.yml",
+    "spacetrack-tracking-and-impact-prediction-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
