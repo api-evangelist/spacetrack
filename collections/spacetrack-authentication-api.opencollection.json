@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Space-Track Ancillary Authentication API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Login to Space-Track",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://www.space-track.org/ajaxauth/login",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "identity",
+                  "value": ""
+                },
+                {
+                  "name": "password",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Authenticates the user and sets a session cookie required for all subsequent API requests. Credentials must not be shared between users."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

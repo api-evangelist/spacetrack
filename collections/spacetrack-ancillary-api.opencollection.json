@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Space-Track Ancillary API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ancillary",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query orbital object boxscore by country",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/boxscore/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns a country-level accounting of cataloged objects in orbit. Rate limit: 1 query per day after 17:00 UTC."
+        },
+        {
+          "info": {
+            "name": "Query launch sites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/launch_site/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns reference data for all recognized launch sites and their codes used in the satellite catalog."
+        },
+        {
+          "info": {
+            "name": "Query announcements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/announcement/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns system and operational announcements from Space-Track."
+        },
+        {
+          "info": {
+            "name": "Query satellite maneuver data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/expandedspacedata/query/class/maneuver/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns maneuver records for satellites that have performed propulsive maneuvers. Requires expanded space data access."
+        },
+        {
+          "info": {
+            "name": "Query historical satellite maneuver data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/expandedspacedata/query/class/maneuver_history/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns historical maneuver records for satellites."
+        },
+        {
+          "info": {
+            "name": "Query organization data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/expandedspacedata/query/class/organization/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns organization reference data for satellite operators and countries."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

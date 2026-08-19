@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Space-Track Ancillary Tracking and Impact Prediction API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tracking and Impact Prediction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Tracking and Impact Prediction (TIP) messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/tip/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns reentry tracking and impact prediction messages for hazardous debris. Rate limit: 1 per hour normally; 1 per 10 minutes when reentry is within 12 hours."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

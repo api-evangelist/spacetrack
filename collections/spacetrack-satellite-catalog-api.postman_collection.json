@@ -1,0 +1,861 @@
+{
+  "item": [
+    {
+      "id": "27fdb488-06f6-4288-9187-3e7431c04d29",
+      "name": "Satellite Catalog",
+      "description": {
+        "content": "Catalog metadata for all tracked Earth-orbiting objects",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f1f4e176-a685-42d1-a17f-f0d02057d14d",
+          "name": "Query Satellite Catalog (SATCAT)",
+          "request": {
+            "name": "Query Satellite Catalog (SATCAT)",
+            "description": {
+              "content": "Returns catalog metadata for tracked Earth-orbiting objects including payloads, rocket bodies, and debris. Rate limit: 1 query per day after 17:00 UTC.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "basicspacedata",
+                "query",
+                "class",
+                "satcat",
+                ":queryParams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "queryParams",
+                  "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "chocolatechip"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "df800261-d100-4b29-8a00-049d99630f16",
+              "name": "Satellite catalog records",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"INTLDES\": \"1998-067A\",\n    \"NORAD_CAT_ID\": \"25544\",\n    \"OBJECT_TYPE\": \"PAYLOAD\",\n    \"SATNAME\": \"ISS (ZARYA)\",\n    \"COUNTRY\": \"ISS\",\n    \"LAUNCH\": \"1998-11-20\",\n    \"SITE\": \"TTMTR\",\n    \"DECAY\": null,\n    \"PERIOD\": \"92.68\",\n    \"INCLINATION\": \"51.64\",\n    \"APOGEE\": \"421\",\n    \"PERIGEE\": \"417\",\n    \"COMMENT\": null,\n    \"COMMENTCODE\": null,\n    \"RCSVALUE\": \"0\",\n    \"RCS_SIZE\": \"LARGE\",\n    \"FILE\": \"12345\",\n    \"LAUNCH_YEAR\": \"1998\",\n    \"LAUNCH_NUM\": \"67\",\n    \"LAUNCH_PIECE\": \"A\",\n    \"CURRENT\": \"Y\",\n    \"OBJECT_NAME\": \"ISS (ZARYA)\",\n    \"OBJECT_ID\": \"1998-067A\",\n    \"OBJECT_NUMBER\": \"25544\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5479b976-0296-4b88-ad0b-3f9f4f158090",
+              "name": "Authentication required. Login at /ajaxauth/login first to obtain a session cookie.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "79f36de5-c2be-4da8-b737-409953969dfa",
+              "name": "Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b5e9e95-2224-4725-9f36-bb0c723b880f",
+          "name": "Query SATCAT changes",
+          "request": {
+            "name": "Query SATCAT changes",
+            "description": {
+              "content": "Returns records of changes to the satellite catalog. Useful for tracking updates to object names, status, and classifications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "basicspacedata",
+                "query",
+                "class",
+                "satcat_change",
+                ":queryParams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "queryParams",
+                  "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "chocolatechip"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "58217c21-eb84-4d2b-8518-ad61126a8baf",
+              "name": "SATCAT change records",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat_change",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"NORAD_CAT_ID\": \"string\",\n    \"OBJECT_NAME\": \"string\",\n    \"INTLDES\": \"string\",\n    \"CHANGE_DATE\": \"1974-06-24T21:06:23.990Z\",\n    \"FIELD_CHANGED\": \"string\",\n    \"OLD_VALUE\": \"string\",\n    \"NEW_VALUE\": \"string\"\n  },\n  {\n    \"NORAD_CAT_ID\": \"string\",\n    \"OBJECT_NAME\": \"string\",\n    \"INTLDES\": \"string\",\n    \"CHANGE_DATE\": \"1960-08-24T18:55:39.516Z\",\n    \"FIELD_CHANGED\": \"string\",\n    \"OLD_VALUE\": \"string\",\n    \"NEW_VALUE\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "542aae63-99d9-401a-afa0-27ff55d2a735",
+              "name": "Authentication required. Login at /ajaxauth/login first to obtain a session cookie.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat_change",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bed8a3da-2893-44af-a4ba-8e626e893be0",
+              "name": "Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat_change",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c3010d9-33cd-4db2-a1e5-52e24a4a3b1d",
+          "name": "Query recently cataloged objects (SATCAT debut)",
+          "request": {
+            "name": "Query recently cataloged objects (SATCAT debut)",
+            "description": {
+              "content": "Returns recently cataloged objects — new entrants to the satellite catalog. Rate limit: 1 query per day after 17:00 UTC.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "basicspacedata",
+                "query",
+                "class",
+                "satcat_debut",
+                ":queryParams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "queryParams",
+                  "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "chocolatechip"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f0ac874a-4c78-4086-9e96-9266d600a2cd",
+              "name": "Newly cataloged objects",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat_debut",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"INTLDES\": \"1998-067A\",\n    \"NORAD_CAT_ID\": \"25544\",\n    \"OBJECT_TYPE\": \"PAYLOAD\",\n    \"SATNAME\": \"ISS (ZARYA)\",\n    \"COUNTRY\": \"ISS\",\n    \"LAUNCH\": \"1998-11-20\",\n    \"SITE\": \"TTMTR\",\n    \"DECAY\": \"1954-02-25\",\n    \"PERIOD\": \"92.68\",\n    \"INCLINATION\": \"51.64\",\n    \"APOGEE\": \"421\",\n    \"PERIGEE\": \"417\",\n    \"RCS_SIZE\": \"LARGE\",\n    \"RCSVALUE\": \"string\",\n    \"LAUNCH_YEAR\": \"1998\",\n    \"LAUNCH_NUM\": \"67\",\n    \"LAUNCH_PIECE\": \"A\",\n    \"CURRENT\": \"Y\",\n    \"OBJECT_NAME\": \"ISS (ZARYA)\",\n    \"OBJECT_ID\": \"1998-067A\",\n    \"OBJECT_NUMBER\": \"25544\",\n    \"FILE\": \"string\",\n    \"COMMENT\": \"string\",\n    \"COMMENTCODE\": \"string\"\n  },\n  {\n    \"INTLDES\": \"1998-067A\",\n    \"NORAD_CAT_ID\": \"25544\",\n    \"OBJECT_TYPE\": \"PAYLOAD\",\n    \"SATNAME\": \"ISS (ZARYA)\",\n    \"COUNTRY\": \"ISS\",\n    \"LAUNCH\": \"1998-11-20\",\n    \"SITE\": \"TTMTR\",\n    \"DECAY\": \"1955-09-24\",\n    \"PERIOD\": \"92.68\",\n    \"INCLINATION\": \"51.64\",\n    \"APOGEE\": \"421\",\n    \"PERIGEE\": \"417\",\n    \"RCS_SIZE\": \"LARGE\",\n    \"RCSVALUE\": \"string\",\n    \"LAUNCH_YEAR\": \"1998\",\n    \"LAUNCH_NUM\": \"67\",\n    \"LAUNCH_PIECE\": \"A\",\n    \"CURRENT\": \"Y\",\n    \"OBJECT_NAME\": \"ISS (ZARYA)\",\n    \"OBJECT_ID\": \"1998-067A\",\n    \"OBJECT_NUMBER\": \"25544\",\n    \"FILE\": \"string\",\n    \"COMMENT\": \"string\",\n    \"COMMENTCODE\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1c91805-02a9-48e4-adff-eba171005d1c",
+              "name": "Authentication required. Login at /ajaxauth/login first to obtain a session cookie.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat_debut",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f61c4fa2-6875-40fc-9fdf-6ec7724d35c6",
+              "name": "Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "basicspacedata",
+                    "query",
+                    "class",
+                    "satcat_debut",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eeba506b-ed05-427b-b392-0d87c2914ce0",
+          "name": "Query expanded satellite data",
+          "request": {
+            "name": "Query expanded satellite data",
+            "description": {
+              "content": "Returns expanded satellite data with additional fields beyond the basic SATCAT.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "expandedspacedata",
+                "query",
+                "class",
+                "satellite",
+                ":queryParams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "",
+                  "key": "queryParams",
+                  "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "chocolatechip"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fd665ee2-f30c-42cc-a4d0-d444ef568189",
+              "name": "Expanded satellite records",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "expandedspacedata",
+                    "query",
+                    "class",
+                    "satellite",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"INTLDES\": \"1998-067A\",\n    \"NORAD_CAT_ID\": \"25544\",\n    \"OBJECT_TYPE\": \"PAYLOAD\",\n    \"SATNAME\": \"ISS (ZARYA)\",\n    \"COUNTRY\": \"ISS\",\n    \"LAUNCH\": \"1998-11-20\",\n    \"SITE\": \"TTMTR\",\n    \"DECAY\": \"1954-02-25\",\n    \"PERIOD\": \"92.68\",\n    \"INCLINATION\": \"51.64\",\n    \"APOGEE\": \"421\",\n    \"PERIGEE\": \"417\",\n    \"RCS_SIZE\": \"LARGE\",\n    \"RCSVALUE\": \"string\",\n    \"LAUNCH_YEAR\": \"1998\",\n    \"LAUNCH_NUM\": \"67\",\n    \"LAUNCH_PIECE\": \"A\",\n    \"CURRENT\": \"Y\",\n    \"OBJECT_NAME\": \"ISS (ZARYA)\",\n    \"OBJECT_ID\": \"1998-067A\",\n    \"OBJECT_NUMBER\": \"25544\",\n    \"FILE\": \"string\",\n    \"COMMENT\": \"string\",\n    \"COMMENTCODE\": \"string\"\n  },\n  {\n    \"INTLDES\": \"1998-067A\",\n    \"NORAD_CAT_ID\": \"25544\",\n    \"OBJECT_TYPE\": \"PAYLOAD\",\n    \"SATNAME\": \"ISS (ZARYA)\",\n    \"COUNTRY\": \"ISS\",\n    \"LAUNCH\": \"1998-11-20\",\n    \"SITE\": \"TTMTR\",\n    \"DECAY\": \"1955-09-24\",\n    \"PERIOD\": \"92.68\",\n    \"INCLINATION\": \"51.64\",\n    \"APOGEE\": \"421\",\n    \"PERIGEE\": \"417\",\n    \"RCS_SIZE\": \"LARGE\",\n    \"RCSVALUE\": \"string\",\n    \"LAUNCH_YEAR\": \"1998\",\n    \"LAUNCH_NUM\": \"67\",\n    \"LAUNCH_PIECE\": \"A\",\n    \"CURRENT\": \"Y\",\n    \"OBJECT_NAME\": \"ISS (ZARYA)\",\n    \"OBJECT_ID\": \"1998-067A\",\n    \"OBJECT_NUMBER\": \"25544\",\n    \"FILE\": \"string\",\n    \"COMMENT\": \"string\",\n    \"COMMENTCODE\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1dd6fe69-e852-4992-a48b-d52b7b149beb",
+              "name": "Authentication required. Login at /ajaxauth/login first to obtain a session cookie.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "expandedspacedata",
+                    "query",
+                    "class",
+                    "satellite",
+                    ":queryParams"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "",
+                      "key": "queryParams",
+                      "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "chocolatechip",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.space-track.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b54c4b91-2ecc-499e-b039-3990d575e4b0",
+    "name": "Space-Track Ancillary Satellite Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.\n\nContact Support:\n Name: Space-Track Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Space-Track Ancillary Satellite Catalog API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Satellite Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Satellite Catalog (SATCAT)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/satcat/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns catalog metadata for tracked Earth-orbiting objects including payloads, rocket bodies, and debris. Rate limit: 1 query per day after 17:00 UTC."
+        },
+        {
+          "info": {
+            "name": "Query SATCAT changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/satcat_change/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns records of changes to the satellite catalog. Useful for tracking updates to object names, status, and classifications."
+        },
+        {
+          "info": {
+            "name": "Query recently cataloged objects (SATCAT debut)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/satcat_debut/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns recently cataloged objects — new entrants to the satellite catalog. Rate limit: 1 query per day after 17:00 UTC."
+        },
+        {
+          "info": {
+            "name": "Query expanded satellite data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/expandedspacedata/query/class/satellite/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns expanded satellite data with additional fields beyond the basic SATCAT."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

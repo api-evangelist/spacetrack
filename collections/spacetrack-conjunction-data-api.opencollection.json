@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Space-Track Ancillary Conjunction Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Conjunction Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query public Conjunction Data Messages (CDM)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/cdm_public/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns conjunction data messages for close approaches between tracked objects. Rate limit: 3 queries per day for all conjunctions; 1 per hour for specific events."
+        },
+        {
+          "info": {
+            "name": "Query full Conjunction Data Messages (CDM)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/expandedspacedata/query/class/cdm/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns full conjunction data messages from the expanded space data controller. Requires elevated access. Contains complete CCSDS-compliant CDM data including covariance matrices."
+        },
+        {
+          "info": {
+            "name": "Query Conjunction Assessment Results (CAR)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/expandedspacedata/query/class/car/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns conjunction assessment result records from the expanded space data controller."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

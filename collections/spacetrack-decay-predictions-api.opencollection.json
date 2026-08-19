@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Space-Track Ancillary Decay Predictions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Decay Predictions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query decay predictions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://www.space-track.org/basicspacedata/query/class/decay/:queryParams",
+            "params": [
+              {
+                "name": "queryParams",
+                "value": "",
+                "type": "path",
+                "description": "Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "chocolatechip",
+              "value": "{{chocolatechip}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Returns satellite reentry/decay predictions and historical decay data. Rate limit: 1 query per day. Download once and store locally; query with MSG_EPOCH>now-1 for updates."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

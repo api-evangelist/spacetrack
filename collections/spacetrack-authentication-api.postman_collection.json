@@ -1,0 +1,195 @@
+{
+  "item": [
+    {
+      "id": "2668020d-3d04-4137-8fb2-7ed8892e9580",
+      "name": "Authentication",
+      "description": {
+        "content": "Session-based authentication via cookie",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "46553b08-da36-45cb-9199-61f42c22186b",
+          "name": "Login to Space-Track",
+          "request": {
+            "name": "Login to Space-Track",
+            "description": {
+              "content": "Authenticates the user and sets a session cookie required for all subsequent API requests. Credentials must not be shared between users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ajaxauth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "identity",
+                  "value": "<string>",
+                  "description": "(Required) Registered email address (username)"
+                },
+                {
+                  "disabled": false,
+                  "key": "password",
+                  "value": "<password>",
+                  "description": "(Required) Account password"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "09567be7-59df-4463-9356-38c78f257b3c",
+              "name": "Login successful. Session cookie is set.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ajaxauth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Registered email address (username)",
+                        "type": "text/plain"
+                      },
+                      "key": "identity",
+                      "value": "user@example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Account password",
+                        "type": "text/plain"
+                      },
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Session cookie for subsequent requests",
+                  "key": "Set-Cookie",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "115649f9-e647-4d56-a5fc-d0e38e27f2d9",
+              "name": "Invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ajaxauth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Registered email address (username)",
+                        "type": "text/plain"
+                      },
+                      "key": "identity",
+                      "value": "user@example.com"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Account password",
+                        "type": "text/plain"
+                      },
+                      "key": "password",
+                      "value": "<password>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://www.space-track.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cf35f869-7584-4ba9-a0a8-246c3b023a7b",
+    "name": "Space-Track Ancillary Authentication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.\n\nContact Support:\n Name: Space-Track Support",
+      "type": "text/plain"
+    }
+  }
+}
