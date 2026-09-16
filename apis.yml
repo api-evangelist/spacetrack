@@ -1,5 +1,7 @@
 name: Space-Track
-description: US military space surveillance REST API providing Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for tracked satellites and debris operated by the 18th Space Control Squadron.
+description: US military space surveillance REST API providing Two-Line Element (TLE) sets, conjunction
+  data messages, orbital element sets, satellite catalog data, and decay predictions for tracked satellites
+  and debris operated by the 18th Space Control Squadron.
 deliveryModel:
   model: saas
   open_source: false
@@ -28,16 +30,16 @@ accessModel:
   method: derived
 image: https://www.space-track.org/favicon.ico
 tags:
-  - Space
-  - Satellites
-  - TLE
-  - Orbital Data
-  - Space Surveillance
-  - Debris Tracking
-  - Conjunction Data
-  - US Military
-created: "2026-06-13"
-modified: "2026-06-13"
+- Space
+- Satellites
+- TLE
+- Orbital Data
+- Space Surveillance
+- Debris Tracking
+- Conjunction Data
+- US Military
+created: '2026-06-13'
+modified: '2026-09-16'
 url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
@@ -56,26 +58,19 @@ apis:
   - type: TermsOfService
     url: https://www.space-track.org/documentation#user-agreement
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
   - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
   - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 - aid: spacetrack:spacetrack-authentication-api
   name: Space-Track Authentication API
   description: Session-based authentication via cookie
@@ -91,26 +86,19 @@ apis:
   - type: TermsOfService
     url: https://www.space-track.org/documentation#user-agreement
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
   - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
   - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 - aid: spacetrack:spacetrack-conjunction-data-api
   name: Space-Track Conjunction Data API
   description: Spaceflight safety conjunction data messages (CDM)
@@ -126,26 +114,19 @@ apis:
   - type: TermsOfService
     url: https://www.space-track.org/documentation#user-agreement
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
   - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
   - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 - aid: spacetrack:spacetrack-decay-predictions-api
   name: Space-Track Decay Predictions API
   description: Satellite reentry and decay predictions
@@ -161,26 +142,19 @@ apis:
   - type: TermsOfService
     url: https://www.space-track.org/documentation#user-agreement
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
   - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
   - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 - aid: spacetrack:spacetrack-general-perturbations-api
   name: Space-Track General Perturbations API
   description: Current and historical SGP4 keplerian element sets (TLE/OMM)
@@ -196,26 +170,19 @@ apis:
   - type: TermsOfService
     url: https://www.space-track.org/documentation#user-agreement
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
   - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
   - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 - aid: spacetrack:spacetrack-satellite-catalog-api
   name: Space-Track Satellite Catalog API
   description: Catalog metadata for all tracked Earth-orbiting objects
@@ -231,26 +198,19 @@ apis:
   - type: TermsOfService
     url: https://www.space-track.org/documentation#user-agreement
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
   - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
   - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
   - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 - aid: spacetrack:spacetrack-tracking-and-impact-prediction-api
   name: Space-Track Tracking and Impact Prediction API
   description: Reentry tracking and impact prediction messages (TIP)
@@ -266,55 +226,50 @@ apis:
   - type: TermsOfService
     url: https://www.space-track.org/documentation#user-agreement
   - type: Plans
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
-  - type: RateLimits
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
-  - type: FinOps
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
-  - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
-  - type: JSONSchema
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
-  - type: Vocabulary
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
-  - type: JSONLDContext
-    url: >-
-      https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
-common:
-  - type: AgenticAccess
-    url: agentic-access/spacetrack-agentic-access.yml
-  - type: DomainSecurity
-    url: security/spacetrack-domain-security.yml
-  - type: Authentication
-    url: authentication/spacetrack-authentication.yml
-  - type: Portal
-    url: https://www.space-track.org
-  - type: Documentation
-    url: https://www.space-track.org/documentation
-  - type: Login
-    url: https://www.space-track.org/auth/login
-  - type: Registration
-    url: https://www.space-track.org/auth/createAccount
-  - type: TermsOfService
-    url: https://www.space-track.org/documentation#user-agreement
-  - type: Contact
-    url: https://www.space-track.org/contactus/
-  - type: Plans
     url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
   - type: RateLimits
     url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
   - type: FinOps
     url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
-  - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/openapi/openapi.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/gp-record.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-schema/satcat-record.json
+  - type: Vocabulary
+    url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/vocabulary/vocabulary.json
   - type: JSONLDContext
     url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
+common:
+- type: Website
+  url: https://space-track.org
+- type: AgenticAccess
+  url: agentic-access/spacetrack-agentic-access.yml
+- type: DomainSecurity
+  url: security/spacetrack-domain-security.yml
+- type: Authentication
+  url: authentication/spacetrack-authentication.yml
+- type: Portal
+  url: https://www.space-track.org
+- type: Documentation
+  url: https://www.space-track.org/documentation
+- type: Login
+  url: https://www.space-track.org/auth/login
+- type: Registration
+  url: https://www.space-track.org/auth/createAccount
+- type: TermsOfService
+  url: https://www.space-track.org/documentation#user-agreement
+- type: Contact
+  url: https://www.space-track.org/contactus/
+- type: Plans
+  url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/plans/plans.yml
+- type: RateLimits
+  url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/rate-limits/rate-limits.yml
+- type: FinOps
+  url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/finops/finops.yml
+- type: OpenAPI
+  url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/openapi/openapi.json
+- type: JSONLDContext
+  url: https://raw.githubusercontent.com/api-evangelist/spacetrack/refs/heads/main/json-ld/context.jsonld
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
