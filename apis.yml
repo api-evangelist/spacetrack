@@ -31,6 +31,15 @@ accessModel:
 image: https://www.space-track.org/favicon.ico
 tags:
 - Space
+- Satellite
+- TLE
+- Orbital Data
+- Space Surveillance
+- Debris Tracking
+- Conjunction Data
+- US Military
+tags_raw:
+- Space
 - Satellites
 - TLE
 - Orbital Data
