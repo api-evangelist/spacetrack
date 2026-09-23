@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Space-Track Ancillary Tracking and Impact Prediction API
+  title: Space-Track Tracking and Impact Prediction API
   description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
   version: 1.0.0
   contact:
@@ -45,10 +45,10 @@ paths:
       - sessionCookie: []
 components:
   responses:
-    Unauthorized:
-      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
     RateLimited:
       description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
   schemas:
     TIPRecord:
       type: object

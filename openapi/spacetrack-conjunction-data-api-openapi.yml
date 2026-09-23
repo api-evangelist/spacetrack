@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Space-Track Ancillary Conjunction Data API
+  title: Space-Track Conjunction Data API
   description: US military space surveillance REST API operated by the 18th Space Control Squadron. Provides Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for all tracked Earth-orbiting objects and debris.
   version: 1.0.0
   contact:
@@ -99,10 +99,20 @@ paths:
       - sessionCookie: []
 components:
   responses:
-    Unauthorized:
-      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
     RateLimited:
       description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
   schemas:
     CDMRecord:
       type: object
@@ -155,16 +165,6 @@ components:
         SAT2_EXCL_VOL:
           type: string
           description: Exclusion volume for second object
-  parameters:
-    queryParams:
-      name: queryParams
-      in: path
-      required: false
-      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
-      schema:
-        type: string
-        default: ''
-        example: NORAD_CAT_ID/25544/format/json/
   securitySchemes:
     sessionCookie:
       type: apiKey
