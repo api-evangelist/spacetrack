@@ -56,7 +56,6 @@ apis:
   name: Space-Track Ancillary API
   description: Launch sites, boxscore, announcements, and other reference data
   humanURL: https://www.space-track.org
-  baseURL: https://www.space-track.org
   tags:
   - Ancillary
   properties:
@@ -84,7 +83,6 @@ apis:
   name: Space-Track Authentication API
   description: Session-based authentication via cookie
   humanURL: https://www.space-track.org
-  baseURL: https://www.space-track.org
   tags:
   - Authentication
   properties:
@@ -112,7 +110,6 @@ apis:
   name: Space-Track Conjunction Data API
   description: Spaceflight safety conjunction data messages (CDM)
   humanURL: https://www.space-track.org
-  baseURL: https://www.space-track.org
   tags:
   - Conjunction Data
   properties:
@@ -140,7 +137,6 @@ apis:
   name: Space-Track Decay Predictions API
   description: Satellite reentry and decay predictions
   humanURL: https://www.space-track.org
-  baseURL: https://www.space-track.org
   tags:
   - Decay Predictions
   properties:
@@ -168,7 +164,6 @@ apis:
   name: Space-Track General Perturbations API
   description: Current and historical SGP4 keplerian element sets (TLE/OMM)
   humanURL: https://www.space-track.org
-  baseURL: https://www.space-track.org
   tags:
   - General Perturbations
   properties:
@@ -196,7 +191,6 @@ apis:
   name: Space-Track Satellite Catalog API
   description: Catalog metadata for all tracked Earth-orbiting objects
   humanURL: https://www.space-track.org
-  baseURL: https://www.space-track.org
   tags:
   - Satellite Catalog
   properties:
@@ -224,7 +218,6 @@ apis:
   name: Space-Track Tracking and Impact Prediction API
   description: Reentry tracking and impact prediction messages (TIP)
   humanURL: https://www.space-track.org
-  baseURL: https://www.space-track.org
   tags:
   - Tracking and Impact Prediction
   properties:

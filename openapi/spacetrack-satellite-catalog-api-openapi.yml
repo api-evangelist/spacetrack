@@ -148,11 +148,6 @@ paths:
       security:
       - sessionCookie: []
 components:
-  responses:
-    Unauthorized:
-      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
-    RateLimited:
-      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
   schemas:
     SATCATRecord:
       type: object
@@ -296,6 +291,11 @@ components:
         NEW_VALUE:
           type: string
           description: Updated field value
+  responses:
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
   parameters:
     queryParams:
       name: queryParams

@@ -154,11 +154,6 @@ paths:
       security:
       - sessionCookie: []
 components:
-  responses:
-    Unauthorized:
-      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
-    RateLimited:
-      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
   schemas:
     AnnouncementRecord:
       type: object
@@ -178,18 +173,45 @@ components:
         announcement_type:
           type: string
           description: Category or type of announcement
-    LaunchSiteRecord:
+    ManeuverRecord:
       type: object
-      description: Launch site reference record
+      description: Satellite maneuver record
       properties:
-        SITE_CODE:
+        NORAD_CAT_ID:
           type: string
-          description: Short code for the launch site
-          example: TTMTR
-        LAUNCH_SITE:
+          description: NORAD catalog number
+        OBJECT_NAME:
           type: string
-          description: Full name of the launch site
-          example: Tyuratam Missile and Space Center, Baikonur, Kazakhstan
+          description: Object name
+        MANEUVER_EPOCH:
+          type: string
+          format: date-time
+          description: Epoch of the maneuver in UTC
+        DELTA_V:
+          type: string
+          description: Delta-V of the maneuver (m/s)
+        MANEUVER_TYPE:
+          type: string
+          description: Type of maneuver
+    OrganizationRecord:
+      type: object
+      description: Organization reference record
+      properties:
+        ORG_ID:
+          type: string
+          description: Organization identifier
+        ORG_NAME:
+          type: string
+          description: Organization name
+        ORG_TYPE:
+          type: string
+          description: Organization type (government, commercial, etc.)
+        COUNTRY:
+          type: string
+          description: Country of the organization
+        COUNTRY_CODE:
+          type: string
+          description: Country code
     BoxscoreRecord:
       type: object
       description: Country-level boxscore of orbital objects
@@ -231,45 +253,18 @@ components:
         COUNTRY_TOTAL:
           type: string
           description: Total objects attributed to this country
-    OrganizationRecord:
+    LaunchSiteRecord:
       type: object
-      description: Organization reference record
+      description: Launch site reference record
       properties:
-        ORG_ID:
+        SITE_CODE:
           type: string
-          description: Organization identifier
-        ORG_NAME:
+          description: Short code for the launch site
+          example: TTMTR
+        LAUNCH_SITE:
           type: string
-          description: Organization name
-        ORG_TYPE:
-          type: string
-          description: Organization type (government, commercial, etc.)
-        COUNTRY:
-          type: string
-          description: Country of the organization
-        COUNTRY_CODE:
-          type: string
-          description: Country code
-    ManeuverRecord:
-      type: object
-      description: Satellite maneuver record
-      properties:
-        NORAD_CAT_ID:
-          type: string
-          description: NORAD catalog number
-        OBJECT_NAME:
-          type: string
-          description: Object name
-        MANEUVER_EPOCH:
-          type: string
-          format: date-time
-          description: Epoch of the maneuver in UTC
-        DELTA_V:
-          type: string
-          description: Delta-V of the maneuver (m/s)
-        MANEUVER_TYPE:
-          type: string
-          description: Type of maneuver
+          description: Full name of the launch site
+          example: Tyuratam Missile and Space Center, Baikonur, Kazakhstan
   parameters:
     queryParams:
       name: queryParams
@@ -280,6 +275,11 @@ components:
         type: string
         default: ''
         example: NORAD_CAT_ID/25544/format/json/
+  responses:
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
   securitySchemes:
     sessionCookie:
       type: apiKey

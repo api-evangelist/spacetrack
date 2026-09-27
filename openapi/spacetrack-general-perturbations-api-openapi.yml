@@ -200,6 +200,16 @@ components:
       description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
     Unauthorized:
       description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
   schemas:
     GPRecord:
       type: object
@@ -335,16 +345,6 @@ components:
           type: string
           description: TLE line 2 (69 characters)
           example: 2 25544  51.6395 123.4567 0001234 234.5678 345.6789 15.49957327 43210
-  parameters:
-    queryParams:
-      name: queryParams
-      in: path
-      required: false
-      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
-      schema:
-        type: string
-        default: ''
-        example: NORAD_CAT_ID/25544/format/json/
   securitySchemes:
     sessionCookie:
       type: apiKey

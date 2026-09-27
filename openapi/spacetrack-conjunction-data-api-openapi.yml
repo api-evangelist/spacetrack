@@ -103,16 +103,6 @@ components:
       description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
     Unauthorized:
       description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
-  parameters:
-    queryParams:
-      name: queryParams
-      in: path
-      required: false
-      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
-      schema:
-        type: string
-        default: ''
-        example: NORAD_CAT_ID/25544/format/json/
   schemas:
     CDMRecord:
       type: object
@@ -165,6 +155,16 @@ components:
         SAT2_EXCL_VOL:
           type: string
           description: Exclusion volume for second object
+  parameters:
+    queryParams:
+      name: queryParams
+      in: path
+      required: false
+      description: 'Flexible REST query path segments. Format: /FIELD/VALUE/FIELD2/VALUE2/format/FORMAT/. Supports operators: range (--), greater-than (%3E), less-than (%3C), null (null-val), comma lists. Example: /NORAD_CAT_ID/25544/format/json/'
+      schema:
+        type: string
+        default: ''
+        example: NORAD_CAT_ID/25544/format/json/
   securitySchemes:
     sessionCookie:
       type: apiKey
