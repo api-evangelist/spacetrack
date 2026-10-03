@@ -149,6 +149,32 @@ paths:
       - sessionCookie: []
 components:
   schemas:
+    SATCATChangeRecord:
+      type: object
+      description: Record of a change to the satellite catalog
+      properties:
+        NORAD_CAT_ID:
+          type: string
+          description: NORAD catalog number
+        OBJECT_NAME:
+          type: string
+          description: Current object name
+        INTLDES:
+          type: string
+          description: International designator
+        CHANGE_DATE:
+          type: string
+          format: date-time
+          description: Date the change was recorded
+        FIELD_CHANGED:
+          type: string
+          description: Name of the field that was changed
+        OLD_VALUE:
+          type: string
+          description: Previous field value
+        NEW_VALUE:
+          type: string
+          description: Updated field value
     SATCATRecord:
       type: object
       description: Satellite catalog (SATCAT) record
@@ -265,37 +291,11 @@ components:
           - string
           - 'null'
           description: Optional comment code
-    SATCATChangeRecord:
-      type: object
-      description: Record of a change to the satellite catalog
-      properties:
-        NORAD_CAT_ID:
-          type: string
-          description: NORAD catalog number
-        OBJECT_NAME:
-          type: string
-          description: Current object name
-        INTLDES:
-          type: string
-          description: International designator
-        CHANGE_DATE:
-          type: string
-          format: date-time
-          description: Date the change was recorded
-        FIELD_CHANGED:
-          type: string
-          description: Name of the field that was changed
-        OLD_VALUE:
-          type: string
-          description: Previous field value
-        NEW_VALUE:
-          type: string
-          description: Updated field value
   responses:
-    Unauthorized:
-      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
     RateLimited:
       description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
   parameters:
     queryParams:
       name: queryParams
