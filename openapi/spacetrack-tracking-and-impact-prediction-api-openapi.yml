@@ -45,10 +45,10 @@ paths:
       - sessionCookie: []
 components:
   responses:
-    RateLimited:
-      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
     Unauthorized:
       description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
   schemas:
     TIPRecord:
       type: object

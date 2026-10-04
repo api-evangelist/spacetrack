@@ -155,11 +155,41 @@ paths:
       - sessionCookie: []
 components:
   responses:
-    RateLimited:
-      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
     Unauthorized:
       description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
   schemas:
+    LaunchSiteRecord:
+      type: object
+      description: Launch site reference record
+      properties:
+        SITE_CODE:
+          type: string
+          description: Short code for the launch site
+          example: TTMTR
+        LAUNCH_SITE:
+          type: string
+          description: Full name of the launch site
+          example: Tyuratam Missile and Space Center, Baikonur, Kazakhstan
+    AnnouncementRecord:
+      type: object
+      description: Space-Track system announcement
+      properties:
+        announcement_text:
+          type: string
+          description: Announcement content
+        announcement_start:
+          type: string
+          format: date-time
+          description: Announcement start date-time
+        announcement_end:
+          type: string
+          format: date-time
+          description: Announcement end date-time
+        announcement_type:
+          type: string
+          description: Category or type of announcement
     OrganizationRecord:
       type: object
       description: Organization reference record
@@ -179,36 +209,26 @@ components:
         COUNTRY_CODE:
           type: string
           description: Country code
-    AnnouncementRecord:
+    ManeuverRecord:
       type: object
-      description: Space-Track system announcement
+      description: Satellite maneuver record
       properties:
-        announcement_text:
+        NORAD_CAT_ID:
           type: string
-          description: Announcement content
-        announcement_start:
+          description: NORAD catalog number
+        OBJECT_NAME:
+          type: string
+          description: Object name
+        MANEUVER_EPOCH:
           type: string
           format: date-time
-          description: Announcement start date-time
-        announcement_end:
+          description: Epoch of the maneuver in UTC
+        DELTA_V:
           type: string
-          format: date-time
-          description: Announcement end date-time
-        announcement_type:
+          description: Delta-V of the maneuver (m/s)
+        MANEUVER_TYPE:
           type: string
-          description: Category or type of announcement
-    LaunchSiteRecord:
-      type: object
-      description: Launch site reference record
-      properties:
-        SITE_CODE:
-          type: string
-          description: Short code for the launch site
-          example: TTMTR
-        LAUNCH_SITE:
-          type: string
-          description: Full name of the launch site
-          example: Tyuratam Missile and Space Center, Baikonur, Kazakhstan
+          description: Type of maneuver
     BoxscoreRecord:
       type: object
       description: Country-level boxscore of orbital objects
@@ -250,26 +270,6 @@ components:
         COUNTRY_TOTAL:
           type: string
           description: Total objects attributed to this country
-    ManeuverRecord:
-      type: object
-      description: Satellite maneuver record
-      properties:
-        NORAD_CAT_ID:
-          type: string
-          description: NORAD catalog number
-        OBJECT_NAME:
-          type: string
-          description: Object name
-        MANEUVER_EPOCH:
-          type: string
-          format: date-time
-          description: Epoch of the maneuver in UTC
-        DELTA_V:
-          type: string
-          description: Delta-V of the maneuver (m/s)
-        MANEUVER_TYPE:
-          type: string
-          description: Type of maneuver
   parameters:
     queryParams:
       name: queryParams
