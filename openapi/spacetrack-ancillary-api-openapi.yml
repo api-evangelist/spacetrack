@@ -154,24 +154,7 @@ paths:
       security:
       - sessionCookie: []
 components:
-  responses:
-    Unauthorized:
-      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
-    RateLimited:
-      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
   schemas:
-    LaunchSiteRecord:
-      type: object
-      description: Launch site reference record
-      properties:
-        SITE_CODE:
-          type: string
-          description: Short code for the launch site
-          example: TTMTR
-        LAUNCH_SITE:
-          type: string
-          description: Full name of the launch site
-          example: Tyuratam Missile and Space Center, Baikonur, Kazakhstan
     AnnouncementRecord:
       type: object
       description: Space-Track system announcement
@@ -190,25 +173,6 @@ components:
         announcement_type:
           type: string
           description: Category or type of announcement
-    OrganizationRecord:
-      type: object
-      description: Organization reference record
-      properties:
-        ORG_ID:
-          type: string
-          description: Organization identifier
-        ORG_NAME:
-          type: string
-          description: Organization name
-        ORG_TYPE:
-          type: string
-          description: Organization type (government, commercial, etc.)
-        COUNTRY:
-          type: string
-          description: Country of the organization
-        COUNTRY_CODE:
-          type: string
-          description: Country code
     ManeuverRecord:
       type: object
       description: Satellite maneuver record
@@ -229,6 +193,25 @@ components:
         MANEUVER_TYPE:
           type: string
           description: Type of maneuver
+    OrganizationRecord:
+      type: object
+      description: Organization reference record
+      properties:
+        ORG_ID:
+          type: string
+          description: Organization identifier
+        ORG_NAME:
+          type: string
+          description: Organization name
+        ORG_TYPE:
+          type: string
+          description: Organization type (government, commercial, etc.)
+        COUNTRY:
+          type: string
+          description: Country of the organization
+        COUNTRY_CODE:
+          type: string
+          description: Country code
     BoxscoreRecord:
       type: object
       description: Country-level boxscore of orbital objects
@@ -270,6 +253,23 @@ components:
         COUNTRY_TOTAL:
           type: string
           description: Total objects attributed to this country
+    LaunchSiteRecord:
+      type: object
+      description: Launch site reference record
+      properties:
+        SITE_CODE:
+          type: string
+          description: Short code for the launch site
+          example: TTMTR
+        LAUNCH_SITE:
+          type: string
+          description: Full name of the launch site
+          example: Tyuratam Missile and Space Center, Baikonur, Kazakhstan
+  responses:
+    RateLimited:
+      description: Rate limit exceeded. Maximum 30 requests per minute or 300 per hour globally. Per-class rate limits also apply.
+    Unauthorized:
+      description: Authentication required. Login at /ajaxauth/login first to obtain a session cookie.
   parameters:
     queryParams:
       name: queryParams
