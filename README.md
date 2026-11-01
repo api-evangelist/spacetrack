@@ -64,49 +64,156 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Space-Track.org is the official US military space surveillance REST API operated by the 18th Space Control Squadron of the US Space Force. It provides unclassified space situational awareness data including Two-Line Element (TLE) sets, conjunction data messages (CDMs), satellite catalog information, decay and reentry predictions, and tracking and impact predictions for all Earth-orbiting objects tracked by the US Space Surveillance Network.
+US military space surveillance REST API providing Two-Line Element (TLE) sets, conjunction data messages, orbital element sets, satellite catalog data, and decay predictions for tracked satellites and debris operated by the 18th Space Control Squadron.
 
-## Overview
+**Areas:** Space · Satellite · TLE · Orbital Data · Space Surveillance · Debris Tracking · Conjunction Data · US Military
 
-- **Base URL:** https://www.space-track.org
-- **API Type:** REST
-- **Authentication:** Session cookie (username/password login)
-- **Cost:** Free (US Government policy; registration required)
-- **Operator:** 18th Space Control Squadron, US Space Force
+## Space-Track on APIs.io
 
-## Key API Classes
+Everything profiled for Space-Track is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/spacetrack/](https://apis.io/providers/spacetrack/)** — or go straight to one of the APIs or properties below.
 
-| Class | Controller | Description |
-|-------|-----------|-------------|
-| gp | basicspacedata | Current General Perturbations (SGP4 element sets / TLEs) |
-| gp_history | basicspacedata | 138+ million historical orbital element sets |
-| satcat | basicspacedata | Satellite catalog with metadata for all tracked objects |
-| cdm_public | basicspacedata | Public conjunction data messages |
-| tip | basicspacedata | Tracking and Impact Prediction (reentry) messages |
-| decay | basicspacedata | Satellite reentry predictions and history |
-| boxscore | basicspacedata | Summary statistics on tracked objects |
-| cdm | expandedspacedata | Full conjunction data messages (approved users) |
-| maneuver | expandedspacedata | Maneuver data for cooperative satellites |
+### APIs (7)
 
-## Data Formats
+- [Space-Track Ancillary API](https://apis.io/apis/spacetrack/spacetrack-ancillary-api/) — Launch sites, boxscore, announcements, and other reference data
+- [Space-Track Authentication API](https://apis.io/apis/spacetrack/spacetrack-authentication-api/) — Session-based authentication via cookie
+- [Space-Track Conjunction Data API](https://apis.io/apis/spacetrack/spacetrack-conjunction-data-api/) — Spaceflight safety conjunction data messages (CDM)
+- [Space-Track Decay Predictions API](https://apis.io/apis/spacetrack/spacetrack-decay-predictions-api/) — Satellite reentry and decay predictions
+- [Space-Track General Perturbations API](https://apis.io/apis/spacetrack/spacetrack-general-perturbations-api/) — Current and historical SGP4 keplerian element sets (TLE/OMM)
+- [Space-Track Satellite Catalog API](https://apis.io/apis/spacetrack/spacetrack-satellite-catalog-api/) — Catalog metadata for all tracked Earth-orbiting objects
+- [Space-Track Tracking and Impact Prediction API](https://apis.io/apis/spacetrack/spacetrack-tracking-and-impact-prediction-api/) — Reentry tracking and impact prediction messages (TIP)
 
-- JSON
-- CSV
-- XML (OMM)
-- KVN
-- TLE (two-line element)
-- 3LE (three-line element)
-- HTML
+### Published properties
 
-## Rate Limits
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- 30 requests per minute (global)
-- 300 requests per hour (global)
-- Per-class limits apply (e.g., GP: 1/hour, SATCAT: 1/day)
+#### Agentic access (1)
 
-## Links
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Portal](https://www.space-track.org)
+- [Spacetrack Agentic Access](https://apis.io/agentic-access/spacetrack/spacetrack-agentic-access/)
+
+#### JSON Schema (2)
+
+The data models the API reads and writes.
+
+- [GP Record](https://apis.io/schemas/spacetrack/gp-record/)
+- [SATCAT Record](https://apis.io/schemas/spacetrack/satcat-record/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [context Context](https://apis.io/jsonld/spacetrack/context/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Cdm Query](https://apis.io/examples/spacetrack/cdm-query/)
+- [Gp Iss](https://apis.io/examples/spacetrack/gp-iss/)
+- [Login](https://apis.io/examples/spacetrack/login/)
+- [Satcat Query](https://apis.io/examples/spacetrack/satcat-query/)
+
+#### Collections (7)
+
+Postman and Open Collection request collections.
+
+- [Space-Track Ancillary API](https://apis.io/collections/spacetrack/open-spacetrack-ancillary-api/)
+- [Space-Track Ancillary Authentication API](https://apis.io/collections/spacetrack/open-spacetrack-authentication-api/)
+- [Space-Track Ancillary Conjunction Data API](https://apis.io/collections/spacetrack/open-spacetrack-conjunction-data-api/)
+- [Space-Track Ancillary Decay Predictions API](https://apis.io/collections/spacetrack/open-spacetrack-decay-predictions-api/)
+- [Space-Track Ancillary General Perturbations API](https://apis.io/collections/spacetrack/open-spacetrack-general-perturbations-api/)
+- [Space-Track Ancillary Satellite Catalog API](https://apis.io/collections/spacetrack/open-spacetrack-satellite-catalog-api/)
+- [Space-Track Ancillary Tracking and Impact Prediction API](https://apis.io/collections/spacetrack/open-spacetrack-tracking-and-impact-prediction-api/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [Space-Track — jsonschema rules](https://apis.io/rules/spacetrack/spacetrack-jsonschema-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Spacetrack Authentication](https://apis.io/security/spacetrack/spacetrack-authentication/)
+- [Spacetrack Domain Security](https://apis.io/security/spacetrack/spacetrack-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Plans](https://apis.io/plans/spacetrack/plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Rate Limits](https://apis.io/rate-limits/spacetrack/rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/spacetrack/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://space-track.org)
 - [Documentation](https://www.space-track.org/documentation)
-- [Register](https://www.space-track.org/auth/createAccount)
-- [Contact](https://www.space-track.org/contactus/)
+- [Terms of service](https://www.space-track.org/documentation#user-agreement)
+
+## API Evangelist rating
+
+**Kin Score 35.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 62.6 |
+| Contract governance | 23.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 22.4 |
+
+**Agent readiness 22.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 20.6** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/spacetrack/](https://apis.io/providers/spacetrack/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Space-Track: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/spacetrack/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
